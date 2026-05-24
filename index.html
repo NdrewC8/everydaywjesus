@@ -333,7 +333,7 @@ body.admin-on .add-btn{display:flex;}
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, orderBy, query, serverTimestamp }
+import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -409,19 +409,15 @@ const cache = {};
 
 async function fetchCol(key) {
   try {
-    const q = query(collection(db, COL(key)), orderBy('order','asc'));
-    const snap = await getDocs(q);
+    const snap = await getDocs(collection(db, COL(key)));
     const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    items.sort((a,b) => (a.order||0) - (b.order||0));
     cache[key] = items;
     return items;
   } catch(e) {
-    // orderBy 인덱스 없을 경우 fallback
-    try {
-      const snap = await getDocs(collection(db, COL(key)));
-      const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      cache[key] = items;
-      return items;
-    } catch(e2) { return []; }
+    console.error('fetchCol error:', key, e);
+    cache[key] = [];
+    return [];
   }
 }
 
@@ -436,12 +432,21 @@ async function seedIfEmpty(key) {
 
 /* ── INIT: seed + render all ── */
 async function init() {
-  const keys = Object.keys(SEED);
-  // seed empty collections
-  await Promise.all(keys.map(seedIfEmpty));
-  // fetch all
-  await Promise.all(keys.map(fetchCol));
-  // render
+  // 10초 타임아웃 - Firebase 연결 실패해도 화면은 보여줌
+  const timeout = setTimeout(() => {
+    console.warn('Firebase timeout - rendering anyway');
+    renderAll();
+    document.getElementById('loadingOverlay').classList.add('hide');
+  }, 10000);
+
+  try {
+    const keys = Object.keys(SEED);
+    await Promise.all(keys.map(seedIfEmpty));
+    await Promise.all(keys.map(fetchCol));
+  } catch(e) {
+    console.error('init error:', e);
+  }
+  clearTimeout(timeout);
   renderAll();
   document.getElementById('loadingOverlay').classList.add('hide');
 }
