@@ -68,15 +68,16 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .pc-sub{font-size:12px;color:var(--text-dim);}
 .pc-arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px;opacity:.6;}
 
-/* 유튜브 바로가기 버튼 */
-.yt-link-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  margin-top:10px;padding:7px 14px;
-  background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.25);
-  color:#ff6b6b;font-size:12px;font-weight:500;border-radius:20px;
-  text-decoration:none;transition:all .2s;font-family:'Noto Sans KR',sans-serif;
+/* 유튜브 외부 버튼 */
+.yt-external-btn {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:13px;
+  background:rgba(255,0,0,.08); border:1px solid rgba(255,0,0,.2);
+  color:#ff6b6b; font-size:14px; font-weight:600; border-radius:var(--radius);
+  text-decoration:none; transition:all .2s; font-family:'Noto Sans KR',sans-serif;
+  margin-bottom:20px; margin-top:-2px;
 }
-.yt-link-btn:hover{background:rgba(255,0,0,.2);border-color:rgba(255,0,0,.4);color:#ff4444;}
+.yt-external-btn:hover { background:rgba(255,0,0,.18); border-color:rgba(255,0,0,.4); color:#ff3333; }
 
 /* NOTICE ITEM */
 .notice-item{background:rgba(201,168,76,.05);border:1px dashed rgba(201,168,76,.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;position:relative;}
@@ -157,10 +158,8 @@ body.admin-on .add-btn{display:flex;}
 <!-- HEADER -->
 <header class="site-header">
   <button class="admin-toggle" id="adminToggleBtn" onclick="openPwModal()">⚙ 관리</button>
-  <div class="header-cross">✦ ✝ ✦</div>
-  <h1 class="site-title">매일 예수와 함께</h1>
+  <h1 class="site-title">매일 매일을 주님께</h1>
   <p class="site-subtitle">EVERYDAY WITH JESUS</p>
-  <p class="header-verse">"내가 곧 길이요 진리요 생명이니" — 요한복음 14:6</p>
 </header>
 
 <!-- NOTICE BAR -->
@@ -203,6 +202,10 @@ body.admin-on .add-btn{display:flex;}
     <p class="section-desc">기도로 하루를 열고 기도로 하루를 닫습니다</p>
   </div>
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+  <div class="verse-box">
+    <p class="verse-text">"아무것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라"</p>
+    <p class="verse-ref">— 빌립보서 4:6</p>
+  </div>
   <div class="badge">매일 기도</div>
   <div id="list-prayer1"></div>
   <button class="add-btn" onclick="openAdd('prayer1','link')">＋ 항목 추가</button>
@@ -220,6 +223,10 @@ body.admin-on .add-btn{display:flex;}
     <p class="section-desc">하나님께 드리는 찬양으로 하루를 채우세요</p>
   </div>
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+  <div class="verse-box">
+    <p class="verse-text">"시와 찬송과 신령한 노래들로 서로 화답하며 너희의 마음으로 주께 노래하며 찬송하며"</p>
+    <p class="verse-ref">— 에베소서 5:19</p>
+  </div>
   <div class="badge">주일 찬양</div>
   <div id="list-praise"></div>
   <button class="add-btn" onclick="openAdd('praise','link')">＋ 항목 추가</button>
@@ -233,6 +240,10 @@ body.admin-on .add-btn{display:flex;}
     <p class="section-desc">매일 성경을 읽고 묵상하는 시간</p>
   </div>
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+  <div class="verse-box">
+    <p class="verse-text">"모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니"</p>
+    <p class="verse-ref">— 디모데후서 3:16</p>
+  </div>
   <div class="badge">구약 성경 통독</div>
   <div id="list-bible1"></div>
   <button class="add-btn" onclick="openAdd('bible1','link')">＋ 항목 추가</button>
@@ -250,6 +261,10 @@ body.admin-on .add-btn{display:flex;}
     <p class="section-desc">귀로 듣는 하나님의 말씀</p>
   </div>
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+  <div class="verse-box">
+    <p class="verse-text">"말씀을 전파하라 때를 얻든지 못 얻든지 항상 힘쓰라 범사에 오래 참음과 가르침으로 경책하며 경계하며 권하라"</p>
+    <p class="verse-ref">— 디모데후서 4:2</p>
+  </div>
   <div class="badge">특종 설교</div>
   <div id="list-sermon1"></div>
   <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
@@ -578,13 +593,13 @@ function renderLinks(key) {
             <div class="pc-label">${esc(item.label||'')}</div>
             <div class="pc-title">${esc(item.title)}</div>
             <div class="pc-sub">${esc(item.sub||'YouTube')}</div>
-            <a class="yt-link-btn" href="${esc(item.url||'#')}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-              YouTube에서 보기
-            </a>
           </div>
           <button class="edit-btn" onclick="event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
         </div>
+        <a class="yt-external-btn" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+          YouTube에서 보기
+        </a>
       `;
     } else {
       return `
