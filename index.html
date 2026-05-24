@@ -68,6 +68,16 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .pc-sub{font-size:12px;color:var(--text-dim);}
 .pc-arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px;opacity:.6;}
 
+/* 유튜브 바로가기 버튼 */
+.yt-link-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:10px;padding:7px 14px;
+  background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.25);
+  color:#ff6b6b;font-size:12px;font-weight:500;border-radius:20px;
+  text-decoration:none;transition:all .2s;font-family:'Noto Sans KR',sans-serif;
+}
+.yt-link-btn:hover{background:rgba(255,0,0,.2);border-color:rgba(255,0,0,.4);color:#ff4444;}
+
 /* NOTICE ITEM */
 .notice-item{background:rgba(201,168,76,.05);border:1px dashed rgba(201,168,76,.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;position:relative;}
 .notice-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
@@ -568,6 +578,10 @@ function renderLinks(key) {
             <div class="pc-label">${esc(item.label||'')}</div>
             <div class="pc-title">${esc(item.title)}</div>
             <div class="pc-sub">${esc(item.sub||'YouTube')}</div>
+            <a class="yt-link-btn" href="${esc(item.url||'#')}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+              YouTube에서 보기
+            </a>
           </div>
           <button class="edit-btn" onclick="event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
         </div>
