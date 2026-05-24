@@ -40,7 +40,7 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* SECTIONS */
-.page-section{display:none;animation:fadeIn .4s ease both;min-height:60vh;padding:24px 18px 80px;max-width:640px;margin:0 auto;}
+.page-section{display:none;min-height:60vh;padding:24px 18px 80px;max-width:640px;margin:0 auto;position:relative;}
 .page-section.active{display:block;}
 .section-header{text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border);}
 .section-icon{font-size:40px;margin-bottom:10px;display:block;}
@@ -489,11 +489,7 @@ function renderNotices() {
 
 function getYoutubeId(url) {
   if (!url) return null;
-  // playlist
-  const plMatch = url.match(/[?&]list=([^&]+)/);
-  // single video
-  const vMatch = url.match(/(?:youtu\.be\/|[?&]v=)([^&]+)/);
-  // channel
+  const vMatch = url.match(/(?:youtu\.be\/|[?&]v=)([^&?#]+)/);
   if (url.includes('/@') || url.includes('/channel/')) return null;
   return vMatch ? vMatch[1] : null;
 }
@@ -504,11 +500,27 @@ function getPlaylistId(url) {
   return m ? m[1] : null;
 }
 
-function getYoutubeThumbnail(url) {
-  const vid = getYoutubeId(url);
-  if (vid) return `https://img.youtube.com/vi/${vid}/mqdefault.jpg`;
-  const pid = getPlaylistId(url);
-  if (pid) return `https://i.ytimg.com/vi/${pid}/mqdefault.jpg`; // fallback
+function isYoutubeUrl(url) {
+  return url && (url.includes('youtube.com') || url.includes('youtu.be'));
+}
+
+// 플레이리스트 썸네일: YouTube oEmbed API 활용
+const thumbCache = {};
+async function fetchPlaylistThumb(pid) {
+  if (thumbCache[pid]) return thumbCache[pid];
+  try {
+    // oEmbed로 플레이리스트 첫 영상 정보 가져오기
+    const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list=${pid}&format=json`);
+    const data = await res.json();
+    // thumbnail_url 형식: https://i.ytimg.com/vi/VIDEO_ID/hqdefault.jpg
+    const match = data.thumbnail_url?.match(/\/vi\/([^/]+)\//);
+    if (match) {
+      const vidId = match[1];
+      const thumb = `https://img.youtube.com/vi/${vidId}/mqdefault.jpg`;
+      thumbCache[pid] = thumb;
+      return thumb;
+    }
+  } catch(e) {}
   return null;
 }
 
@@ -526,20 +538,27 @@ function renderLinks(key) {
   const el = document.getElementById('list-' + key);
   if (!el) return;
   if (!items.length) { el.innerHTML = '<p class="empty-msg">항목이 없습니다</p>'; return; }
+
   el.innerHTML = items.map(item => {
-    const thumb = getYoutubeThumbnail(item.url);
+    const vid = getYoutubeId(item.url);
+    const pid = getPlaylistId(item.url);
+    const isYT = isYoutubeUrl(item.url);
     const embedUrl = buildEmbedUrl(item.url);
-    const isYoutube = !!(thumb || embedUrl);
     const cardId = 'card-' + item.id;
 
-    if (isYoutube) {
+    // 단일 영상은 바로 썸네일 가능
+    const directThumb = vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : null;
+
+    if (isYT) {
       return `
         <div class="playlist-card" id="${cardId}">
           <div class="pc-thumb" onclick="playVideo('${cardId}','${(embedUrl||'').replace(/'/g,"\\'")}')">
-            ${thumb
-              ? `<img src="${esc(thumb)}" alt="${esc(item.title)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-              : ''}
-            <div class="pc-thumb-placeholder" ${thumb ? 'style="display:none"' : ''}>▶️</div>
+            <img id="thumb-${cardId}"
+              src="${directThumb || ''}"
+              alt="${esc(item.title)}"
+              style="${directThumb ? '' : 'display:none'}"
+              onerror="this.style.display='none';document.getElementById('thumb-placeholder-${cardId}').style.display='flex'">
+            <div id="thumb-placeholder-${cardId}" class="pc-thumb-placeholder" style="${directThumb ? 'display:none' : ''}">🎵</div>
             <div class="pc-play-overlay">
               <div class="pc-play-btn">▶</div>
             </div>
@@ -567,6 +586,25 @@ function renderLinks(key) {
       `;
     }
   }).join('');
+
+  // 플레이리스트 썸네일 비동기 로딩
+  items.forEach(item => {
+    const vid = getYoutubeId(item.url);
+    const pid = getPlaylistId(item.url);
+    if (!vid && pid) {
+      const cardId = 'card-' + item.id;
+      fetchPlaylistThumb(pid).then(thumb => {
+        if (!thumb) return;
+        const imgEl = document.getElementById('thumb-' + cardId);
+        const placeholder = document.getElementById('thumb-placeholder-' + cardId);
+        if (imgEl) {
+          imgEl.src = thumb;
+          imgEl.style.display = 'block';
+          if (placeholder) placeholder.style.display = 'none';
+        }
+      });
+    }
+  });
 }
 
 function updateNoticeBar(item) {
@@ -738,13 +776,83 @@ window.playVideo = (cardId, embedUrl) => {
 };
 
 /* ── TAB ── */
-window.switchTab = (name, btn) => {
-  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+const TAB_ORDER = ['notice','prayer','praise','bible','sermon','healing','links','truth'];
+let currentTabIdx = 0;
+
+window.switchTab = (name, btn, dir) => {
+  const prevSection = document.querySelector('.page-section.active');
+  const nextSection = document.getElementById('tab-' + name);
+  const newIdx = TAB_ORDER.indexOf(name);
+  const slideDir = dir !== undefined ? dir : (newIdx > currentTabIdx ? 1 : -1);
+
+  // 탭 버튼
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    const tabs = document.querySelectorAll('.nav-tab');
+    if (tabs[newIdx]) tabs[newIdx].classList.add('active');
+  }
+
+  if (prevSection && prevSection !== nextSection) {
+    // 나가는 섹션 슬라이드 아웃
+    prevSection.style.transition = 'transform .3s ease, opacity .3s ease';
+    prevSection.style.transform = `translateX(${slideDir * -100}%)`;
+    prevSection.style.opacity = '0';
+    setTimeout(() => {
+      prevSection.classList.remove('active');
+      prevSection.style.transform = '';
+      prevSection.style.opacity = '';
+      prevSection.style.transition = '';
+    }, 300);
+  }
+
+  // 들어오는 섹션 슬라이드 인
+  nextSection.style.transform = `translateX(${slideDir * 100}%)`;
+  nextSection.style.opacity = '0';
+  nextSection.style.transition = 'none';
+  nextSection.classList.add('active');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      nextSection.style.transition = 'transform .3s ease, opacity .3s ease';
+      nextSection.style.transform = 'translateX(0)';
+      nextSection.style.opacity = '1';
+    });
+  });
+  setTimeout(() => {
+    nextSection.style.transform = '';
+    nextSection.style.opacity = '';
+    nextSection.style.transition = '';
+  }, 320);
+
+  currentTabIdx = newIdx;
+
+  // 탭 버튼 스크롤 (활성 탭이 보이도록)
+  const activeBtn = btn || document.querySelectorAll('.nav-tab')[newIdx];
+  if (activeBtn) activeBtn.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+
   window.scrollTo({top:0, behavior:'smooth'});
 };
+
+// 터치 스와이프
+let touchStartX = 0;
+let touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  // 수평 스와이프만 (수직 스크롤 제외)
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    const dir = dx < 0 ? 1 : -1; // 왼쪽 스와이프 = 다음 탭
+    const newIdx = Math.max(0, Math.min(TAB_ORDER.length - 1, currentTabIdx + dir));
+    if (newIdx !== currentTabIdx) {
+      switchTab(TAB_ORDER[newIdx], null, dir);
+    }
+  }
+}, { passive: true });
 
 /* modal bg click */
 document.getElementById('editModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeEditModal(); });
