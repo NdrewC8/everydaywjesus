@@ -858,8 +858,6 @@ window.switchTab = (name, btn, dir) => {
   // 탭 버튼 스크롤 (활성 탭이 보이도록)
   const activeBtn = btn || document.querySelectorAll('.nav-tab')[newIdx];
   if (activeBtn) activeBtn.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
-
-  window.scrollTo({top:0, behavior:'smooth'});
 };
 
 // 터치 스와이프
