@@ -32,10 +32,10 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 
 /* NAV */
 .nav-wrapper{position:sticky;top:0;z-index:100;background:rgba(13,11,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-.nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;}
+.nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;justify-content:center;}
 .nav-tabs::-webkit-scrollbar{display:none;}
-.nav-tab{flex-shrink:0;padding:13px 14px;font-size:11px;font-weight:500;color:var(--text-dim);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .25s;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;}
-.nav-tab .tab-icon{font-size:15px;}
+.nav-tab{flex-shrink:0;padding:14px 16px;font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .25s;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.nav-tab .tab-icon{font-size:18px;}
 .nav-tab:hover{color:var(--gold-light);}
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
@@ -43,19 +43,29 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .page-section{display:none;animation:fadeIn .4s ease both;min-height:60vh;padding:24px 18px 80px;max-width:640px;margin:0 auto;}
 .page-section.active{display:block;}
 .section-header{text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border);}
-.section-icon{font-size:34px;margin-bottom:8px;display:block;}
-.section-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--gold-light);margin-bottom:5px;}
-.section-desc{font-size:12px;color:var(--text-dim);line-height:1.7;}
+.section-icon{font-size:40px;margin-bottom:10px;display:block;}
+.section-title{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--gold-light);margin-bottom:6px;}
+.section-desc{font-size:14px;color:var(--text-dim);line-height:1.7;}
 
 /* BADGE */
-.badge{display:inline-block;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:.1em;padding:3px 8px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;}
+.badge{display:inline-block;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;}
 
 /* PLAYLIST CARD */
-.playlist-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:border-color .2s;text-decoration:none;display:block;color:var(--text);position:relative;}
+.playlist-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;transition:border-color .2s;text-decoration:none;display:block;color:var(--text);position:relative;overflow:hidden;}
 .playlist-card:hover{border-color:rgba(201,168,76,.45);}
-.pc-label{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
-.pc-title{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.5;padding-right:28px;}
-.pc-sub{font-size:11px;color:var(--text-dim);}
+.pc-thumb{width:100%;aspect-ratio:16/9;background:#111;position:relative;overflow:hidden;cursor:pointer;}
+.pc-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.pc-thumb-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#1a1712,#2a2218);display:flex;align-items:center;justify-content:center;font-size:40px;}
+.pc-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);transition:background .2s;}
+.pc-play-overlay:hover{background:rgba(0,0,0,.1);}
+.pc-play-btn{width:56px;height:56px;background:rgba(201,168,76,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--deep);transition:transform .2s;}
+.pc-play-btn:hover{transform:scale(1.1);}
+.pc-iframe-wrap{width:100%;aspect-ratio:16/9;display:none;}
+.pc-iframe-wrap iframe{width:100%;height:100%;border:none;}
+.pc-info{padding:14px 16px;}
+.pc-label{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.pc-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.5;padding-right:28px;}
+.pc-sub{font-size:12px;color:var(--text-dim);}
 .pc-arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px;opacity:.6;}
 
 /* NOTICE ITEM */
@@ -477,20 +487,86 @@ function renderNotices() {
   updateNoticeBar(items[items.length-1]);
 }
 
+function getYoutubeId(url) {
+  if (!url) return null;
+  // playlist
+  const plMatch = url.match(/[?&]list=([^&]+)/);
+  // single video
+  const vMatch = url.match(/(?:youtu\.be\/|[?&]v=)([^&]+)/);
+  // channel
+  if (url.includes('/@') || url.includes('/channel/')) return null;
+  return vMatch ? vMatch[1] : null;
+}
+
+function getPlaylistId(url) {
+  if (!url) return null;
+  const m = url.match(/[?&]list=([^&]+)/);
+  return m ? m[1] : null;
+}
+
+function getYoutubeThumbnail(url) {
+  const vid = getYoutubeId(url);
+  if (vid) return `https://img.youtube.com/vi/${vid}/mqdefault.jpg`;
+  const pid = getPlaylistId(url);
+  if (pid) return `https://i.ytimg.com/vi/${pid}/mqdefault.jpg`; // fallback
+  return null;
+}
+
+function buildEmbedUrl(url) {
+  const vid = getYoutubeId(url);
+  const pid = getPlaylistId(url);
+  if (vid && pid) return `https://www.youtube.com/embed/${vid}?list=${pid}&autoplay=1`;
+  if (vid) return `https://www.youtube.com/embed/${vid}?autoplay=1`;
+  if (pid) return `https://www.youtube.com/embed/videoseries?list=${pid}&autoplay=1`;
+  return null;
+}
+
 function renderLinks(key) {
   const items = cache[key] || [];
   const el = document.getElementById('list-' + key);
   if (!el) return;
   if (!items.length) { el.innerHTML = '<p class="empty-msg">항목이 없습니다</p>'; return; }
-  el.innerHTML = items.map(item => `
-    <a class="playlist-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
-      <div class="pc-label">${esc(item.label||'')}</div>
-      <div class="pc-title">${esc(item.icon||'')} ${esc(item.title)}</div>
-      <div class="pc-sub">▶ ${esc(item.sub||'열기')}</div>
-      <span class="pc-arrow">›</span>
-      <button class="edit-btn" onclick="event.preventDefault();event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
-    </a>
-  `).join('');
+  el.innerHTML = items.map(item => {
+    const thumb = getYoutubeThumbnail(item.url);
+    const embedUrl = buildEmbedUrl(item.url);
+    const isYoutube = !!(thumb || embedUrl);
+    const cardId = 'card-' + item.id;
+
+    if (isYoutube) {
+      return `
+        <div class="playlist-card" id="${cardId}">
+          <div class="pc-thumb" onclick="playVideo('${cardId}','${(embedUrl||'').replace(/'/g,"\\'")}')">
+            ${thumb
+              ? `<img src="${esc(thumb)}" alt="${esc(item.title)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+              : ''}
+            <div class="pc-thumb-placeholder" ${thumb ? 'style="display:none"' : ''}>▶️</div>
+            <div class="pc-play-overlay">
+              <div class="pc-play-btn">▶</div>
+            </div>
+          </div>
+          <div class="pc-iframe-wrap" id="iframe-${cardId}"></div>
+          <div class="pc-info">
+            <div class="pc-label">${esc(item.label||'')}</div>
+            <div class="pc-title">${esc(item.title)}</div>
+            <div class="pc-sub">${esc(item.sub||'YouTube')}</div>
+          </div>
+          <button class="edit-btn" onclick="event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
+        </div>
+      `;
+    } else {
+      return `
+        <a class="playlist-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
+          <div class="pc-info">
+            <div class="pc-label">${esc(item.label||'')}</div>
+            <div class="pc-title">${esc(item.icon||'')} ${esc(item.title)}</div>
+            <div class="pc-sub">🔗 ${esc(item.sub||'열기')}</div>
+          </div>
+          <span class="pc-arrow">›</span>
+          <button class="edit-btn" onclick="event.preventDefault();event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
+        </a>
+      `;
+    }
+  }).join('');
 }
 
 function updateNoticeBar(item) {
@@ -645,6 +721,21 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 }
+
+/* ── VIDEO PLAYER ── */
+window.playVideo = (cardId, embedUrl) => {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  const thumb = card.querySelector('.pc-thumb');
+  const iframeWrap = document.getElementById('iframe-' + cardId);
+  if (!embedUrl || !iframeWrap) {
+    // embed 불가 시 새 탭으로
+    return;
+  }
+  thumb.style.display = 'none';
+  iframeWrap.style.display = 'block';
+  iframeWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+};
 
 /* ── TAB ── */
 window.switchTab = (name, btn) => {
