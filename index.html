@@ -519,12 +519,14 @@ async function fetchCol(key) {
     const snap = await getDocs(collection(db, COL(key)));
     const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     items.sort((a,b) => (a.order||0) - (b.order||0));
-    cache[key] = items;
-    return items;
+    // Firestore에 데이터 없으면 SEED로 fallback
+    cache[key] = items.length ? items : (SEED[key] || []);
+    return cache[key];
   } catch(e) {
     console.error('fetchCol error:', key, e);
-    cache[key] = [];
-    return [];
+    // 오류 시 SEED 기본값 표시
+    cache[key] = SEED[key] || [];
+    return cache[key];
   }
 }
 
