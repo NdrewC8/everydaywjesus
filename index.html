@@ -1061,56 +1061,6 @@ function renderBranch(query) {
 }
 window.filterBranch = q => renderBranch(q);
 
-/* ── 저서 구매 버튼 ── */
-const BUY_BOOK_KEY = 'ewj_buybooks';
-
-async function renderBuyBooks() {
-  // localStorage fallback (간단 저장)
-  const raw = localStorage.getItem(BUY_BOOK_KEY);
-  const books = raw ? JSON.parse(raw) : [
-    { id:'b1', title:'저서 구매하기', url:'https://www.coupang.com', icon:'📗' }
-  ];
-  const el = document.getElementById('buy-book-list');
-  const addBtn = document.getElementById('buy-book-add-btn');
-  if (!el) return;
-  if (addBtn) addBtn.style.display = adminOn ? 'flex' : 'none';
-
-  el.innerHTML = books.map(b => `
-    <a class="buy-book-btn" href="${esc(b.url)}" target="_blank" rel="noopener">
-      ${esc(b.icon||'📗')} ${esc(b.title)}
-      <button class="buy-book-btn-edit" onclick="event.preventDefault();event.stopPropagation();editBuyBook('${b.id}')">✏ 수정</button>
-    </a>
-  `).join('');
-}
-
-window.openAddBuyBook = () => {
-  editCtx = { type:'buybook', id: null };
-  document.getElementById('editModalTitle').textContent = '구매 링크 추가';
-  document.getElementById('editDeleteBtn').style.display = 'none';
-  document.getElementById('editModalBody').innerHTML = `
-    <label>버튼 이름</label><input id="ef-title" placeholder="예: 치유의 강물 구매하기" />
-    <label>아이콘 (이모지)</label><input id="ef-icon" placeholder="📗" maxlength="4" value="📗"/>
-    <label>쿠팡 링크 URL</label><input id="ef-url" placeholder="https://www.coupang.com/..." />
-  `;
-  document.getElementById('editModal').classList.add('show');
-};
-
-window.editBuyBook = (id) => {
-  const raw = localStorage.getItem(BUY_BOOK_KEY);
-  const books = raw ? JSON.parse(raw) : [];
-  const b = books.find(x => x.id === id);
-  if (!b) return;
-  editCtx = { type:'buybook', id };
-  document.getElementById('editModalTitle').textContent = '구매 링크 수정';
-  document.getElementById('editDeleteBtn').style.display = 'block';
-  document.getElementById('editModalBody').innerHTML = `
-    <label>버튼 이름</label><input id="ef-title" value="${esc(b.title)}" />
-    <label>아이콘 (이모지)</label><input id="ef-icon" value="${esc(b.icon||'📗')}" maxlength="4"/>
-    <label>쿠팡 링크 URL</label><input id="ef-url" value="${esc(b.url)}" />
-  `;
-  document.getElementById('editModal').classList.add('show');
-};
-
 window.previewIcon = (input) => {
   if (!input.files || !input.files[0]) return;
   const file = input.files[0];
