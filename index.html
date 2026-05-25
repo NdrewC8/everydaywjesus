@@ -215,11 +215,9 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"아무것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라"</p>
     <p class="verse-ref">— 빌립보서 4:6</p>
   </div>
-  <div class="badge">매일 기도</div>
   <div id="list-prayer1"></div>
   <button class="add-btn" onclick="openAdd('prayer1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
-  <div class="badge">기도할 때 듣는 찬양</div>
   <div id="list-prayer2"></div>
   <button class="add-btn" onclick="openAdd('prayer2','link')">＋ 항목 추가</button>
 </section>
@@ -236,7 +234,6 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"시와 찬송과 신령한 노래들로 서로 화답하며 너희의 마음으로 주께 노래하며 찬송하며"</p>
     <p class="verse-ref">— 에베소서 5:19</p>
   </div>
-  <div class="badge">주일 찬양</div>
   <div id="list-praise"></div>
   <button class="add-btn" onclick="openAdd('praise','link')">＋ 항목 추가</button>
 </section>
@@ -253,11 +250,9 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니"</p>
     <p class="verse-ref">— 디모데후서 3:16</p>
   </div>
-  <div class="badge">구약 성경 통독</div>
   <div id="list-bible1"></div>
   <button class="add-btn" onclick="openAdd('bible1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
-  <div class="badge">신약 성경 통독</div>
   <div id="list-bible2"></div>
   <button class="add-btn" onclick="openAdd('bible2','link')">＋ 항목 추가</button>
 </section>
@@ -274,19 +269,15 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"말씀을 전파하라 때를 얻든지 못 얻든지 항상 힘쓰라 범사에 오래 참음과 가르침으로 경책하며 경계하며 권하라"</p>
     <p class="verse-ref">— 디모데후서 4:2</p>
   </div>
-  <div class="badge">특종 설교</div>
   <div id="list-sermon1"></div>
   <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
-  <div class="badge">주일 설교</div>
   <div id="list-sermon2"></div>
   <button class="add-btn" onclick="openAdd('sermon2','link')">＋ 항목 추가</button>
   <div class="divider"></div>
-  <div class="badge">제2 예배 설교</div>
   <div id="list-sermon3"></div>
   <button class="add-btn" onclick="openAdd('sermon3','link')">＋ 항목 추가</button>
   <div class="divider"></div>
-  <div class="badge">사사모 설교</div>
   <div id="list-sermon4"></div>
   <button class="add-btn" onclick="openAdd('sermon4','link')">＋ 항목 추가</button>
 </section>
@@ -303,11 +294,9 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"그가 채찍에 맞음으로 우리는 나음을 받았도다"</p>
     <p class="verse-ref">— 이사야 53:5</p>
   </div>
-  <div class="badge">치유 간증 쇼츠</div>
   <div id="list-healing1"></div>
   <button class="add-btn" onclick="openAdd('healing1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
-  <div class="badge">질병명으로 간증 찾기</div>
   <div id="list-healing2"></div>
   <button class="add-btn" onclick="openAdd('healing2','link')">＋ 항목 추가</button>
 </section>
@@ -739,8 +728,7 @@ function noticeForm(item) {
 function linkForm(item) {
   const hasImg = item.iconUrl && item.iconUrl.startsWith('data:');
   return `
-    <label>이름</label><input id="ef-title" value="${esc(item.title||'')}" placeholder="예: 사랑하는교회 홈페이지"/>
-    <label>라벨 (뱃지)</label><input id="ef-label" value="${esc(item.label||'')}" placeholder="예: 공식 홈페이지"/>
+    <label>이름 (카드에 표시되는 제목)</label><input id="ef-title" value="${esc(item.title||'')}" placeholder="예: 매일 기도 플레이리스트"/>
     <label>로고 이미지 (선택)</label>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <div id="icon-preview" style="width:44px;height:44px;border-radius:10px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0">
@@ -749,12 +737,13 @@ function linkForm(item) {
       <div style="flex:1">
         <input type="file" id="ef-icon-file" accept="image/*" style="font-size:11px;color:var(--text-dim)" onchange="previewIcon(this)"/>
         <div style="font-size:10px;color:var(--text-dim);margin-top:4px">또는 이모지 직접 입력:</div>
-        <input id="ef-icon" value="${hasImg ? '' : esc(item.icon||'')}" placeholder="예: 🔗" maxlength="4" style="margin-top:4px"/>
+        <input id="ef-icon" value="${hasImg ? '' : esc(item.icon||'')}" placeholder="예: 🙏" maxlength="4" style="margin-top:4px"/>
       </div>
     </div>
     <input type="hidden" id="ef-icon-url" value="${esc(item.iconUrl||'')}"/>
+    <input type="hidden" id="ef-label" value="${esc(item.label||'')}"/>
     <label>URL</label><input id="ef-url" value="${esc(item.url||'')}" placeholder="https://..."/>
-    <label>설명</label><input id="ef-sub" value="${esc(item.sub||'')}" placeholder="예: www.belovedc.com"/>
+    <label>설명 (부제목)</label><input id="ef-sub" value="${esc(item.sub||'')}" placeholder="예: YouTube 재생목록"/>
   `;
 }
 
