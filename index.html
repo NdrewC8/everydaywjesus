@@ -229,29 +229,15 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 공지사항 ── -->
 <section id="tab-notice" class="page-section active">
-  <div class="section-header">
-    <span class="section-icon">📢</span>
-    <h2 class="section-title">공지사항</h2>
-    <p class="section-desc">사랑하는교회 · 매일 예수와 함께 소식</p>
-  </div>
-  <div class="admin-bar" id="ab-notice"><span>✏️</span> 관리자 모드 — 공지를 추가하거나 수정할 수 있습니다</div>
+<div class="admin-bar" id="ab-notice"><span>✏️</span> 관리자 모드 — 공지를 추가하거나 수정할 수 있습니다</div>
   <button class="add-btn" onclick="openAdd('notices','notice')">＋ 공지 추가</button>
   <div id="list-notices"></div>
 </section>
 
 <!-- ── 1. 기도 ── -->
 <section id="tab-prayer" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">🙏</span>
-    <h2 class="section-title">기도</h2>
-    <p class="section-desc">기도로 하루를 열고 기도로 하루를 닫습니다</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"아무것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라"</p>
-    <p class="verse-ref">— 빌립보서 4:6</p>
-  </div>
-  <div id="list-prayer1"></div>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<div id="list-prayer1"></div>
   <button class="add-btn" onclick="openAdd('prayer1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
   <div id="list-prayer2"></div>
@@ -260,33 +246,15 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 2. 찬양과 경배 ── -->
 <section id="tab-praise" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">🎵</span>
-    <h2 class="section-title">찬양과 경배</h2>
-    <p class="section-desc">하나님께 드리는 찬양으로 하루를 채우세요</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"시와 찬송과 신령한 노래들로 서로 화답하며 너희의 마음으로 주께 노래하며 찬송하며"</p>
-    <p class="verse-ref">— 에베소서 5:19</p>
-  </div>
-  <div id="list-praise"></div>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<div id="list-praise"></div>
   <button class="add-btn" onclick="openAdd('praise','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 3. 성경 ── -->
 <section id="tab-bible" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">📖</span>
-    <h2 class="section-title">성경</h2>
-    <p class="section-desc">매일 성경을 읽고 묵상하는 시간</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니"</p>
-    <p class="verse-ref">— 디모데후서 3:16</p>
-  </div>
-  <div id="list-bible1"></div>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<div id="list-bible1"></div>
   <button class="add-btn" onclick="openAdd('bible1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
   <div id="list-bible2"></div>
@@ -295,16 +263,7 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 4. 설교 말씀 ── -->
 <section id="tab-sermon" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">🎤</span>
-    <h2 class="section-title">설교 말씀</h2>
-    <p class="section-desc">귀로 듣는 하나님의 말씀</p>
-  </div>
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"말씀을 전파하라 때를 얻든지 못 얻든지 항상 힘쓰라 범사에 오래 참음과 가르침으로 경책하며 경계하며 권하라"</p>
-    <p class="verse-ref">— 디모데후서 4:2</p>
-  </div>
   <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
   <div id="list-sermon1"></div>
   <a class="yt-external-btn" id="buy-sermon1" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
@@ -321,17 +280,8 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 저서별 설교 ── -->
 <section id="tab-books" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">📗</span>
-    <h2 class="section-title">저서별 설교</h2>
-    <p class="section-desc">책과 함께하는 말씀의 깊이</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"이 예언의 말씀을 읽는 자와 듣는 자와 그 가운데에 기록한 것을 지키는 자는 복이 있나니"</p>
-    <p class="verse-ref">— 요한계시록 1:3</p>
-  </div>
-  <button class="add-btn" onclick="openAdd('books1','link')">＋ 항목 추가</button>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<button class="add-btn" onclick="openAdd('books1','link')">＋ 항목 추가</button>
   <div id="list-books1"></div>
   <div class="buy-book-section"><div id="buy-book-list-1"></div><button class="add-btn" id="buy-book-add-btn-1" style="display:none" onclick="openAddBuyBook('1')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
@@ -347,17 +297,8 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 5. 치유 ── -->
 <section id="tab-healing" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">🕊️</span>
-    <h2 class="section-title">치유</h2>
-    <p class="section-desc">주님의 손길로 몸과 마음이 회복됩니다</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"그가 채찍에 맞음으로 우리는 나음을 받았도다"</p>
-    <p class="verse-ref">— 이사야 53:5</p>
-  </div>
-  <div id="list-healing1"></div>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<div id="list-healing1"></div>
   <button class="add-btn" onclick="openAdd('healing1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
   <div id="list-healing2"></div>
@@ -366,24 +307,14 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 6. 바로가기 ── -->
 <section id="tab-links" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">🔗</span>
-    <h2 class="section-title">바로가기</h2>
-    <p class="section-desc">자주 찾는 링크를 한 곳에 모았습니다</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
   <div id="list-links"></div>
   <button class="add-btn" onclick="openAdd('links','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 지교회 ── -->
 <section id="tab-branch" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">⛪</span>
-    <h2 class="section-title">지교회</h2>
-    <p class="section-desc">사랑하는교회 전국 지교회 안내</p>
-  </div>
-  <div id="branch-search-wrap">
+<div id="branch-search-wrap">
     <input id="branch-search" placeholder="🔍  지역명 또는 주소 검색..." oninput="filterBranch(this.value)"
       style="width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;padding:12px 16px;border-radius:var(--radius);outline:none;margin-bottom:16px;"/>
   </div>
@@ -392,17 +323,8 @@ body.admin-on .add-btn{display:flex;}
 
 <!-- ── 7. 진실의 방 ── -->
 <section id="tab-truth" class="page-section">
-  <div class="section-header">
-    <span class="section-icon">✝️</span>
-    <h2 class="section-title">진실의 방</h2>
-    <p class="section-desc">듣는 귀가 필요한 분께<br>진리가 너희를 자유롭게 하리라</p>
-  </div>
-  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div class="verse-box">
-    <p class="verse-text">"진리를 알지니 진리가 너희를 자유롭게 하리라"</p>
-    <p class="verse-ref">— 요한복음 8:32</p>
-  </div>
-  <div id="list-truth"></div>
+<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
+<div id="list-truth"></div>
   <button class="add-btn" onclick="openAdd('truth','link')">＋ 항목 추가</button>
 </section>
 
@@ -684,6 +606,10 @@ function renderLinks(key) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
             YouTube에서 보기
           </a>
+          ${(key.startsWith('books') && item.coupang) ? `
+          <a class="buy-book-btn" href="${esc(item.coupang)}" target="_blank" rel="noopener" style="border-radius:var(--radius);margin-top:4px">
+            📗 저서 구매 바로가기
+          </a>` : ''}
         </div>
       `;
     } else {
@@ -799,7 +725,7 @@ window.openAdd = (key, type) => {
   editCtx = { key, type, id: null };
   document.getElementById('editModalTitle').textContent = type === 'notice' ? '공지 추가' : '항목 추가';
   document.getElementById('editDeleteBtn').style.display = 'none';
-  document.getElementById('editModalBody').innerHTML = type === 'notice' ? noticeForm({}) : linkForm({});
+  document.getElementById('editModalBody').innerHTML = type === 'notice' ? noticeForm({}) : linkForm({}, key);
   document.getElementById('editModal').classList.add('show');
 };
 
@@ -809,7 +735,7 @@ window.openEdit = (key, id, type) => {
   editCtx = { key, type, id };
   document.getElementById('editModalTitle').textContent = type === 'notice' ? '공지 수정' : '항목 수정';
   document.getElementById('editDeleteBtn').style.display = 'block';
-  document.getElementById('editModalBody').innerHTML = type === 'notice' ? noticeForm(item) : linkForm(item);
+  document.getElementById('editModalBody').innerHTML = type === 'notice' ? noticeForm(item) : linkForm(item, key);
   document.getElementById('editModal').classList.add('show');
 };
 
@@ -820,8 +746,9 @@ function noticeForm(item) {
     <label>날짜 (예: 2025.05)</label><input id="ef-date" value="${esc(item.date||'')}" placeholder="2025.05"/>
   `;
 }
-function linkForm(item) {
+function linkForm(item, key) {
   const hasImg = item.iconUrl && item.iconUrl.startsWith('data:');
+  const isBooks = key && key.startsWith('books');
   return `
     <label>이름 (카드에 표시되는 제목)</label><input id="ef-title" value="${esc(item.title||'')}" placeholder="예: 매일 기도 플레이리스트"/>
     <label>로고 이미지 (선택)</label>
@@ -839,6 +766,11 @@ function linkForm(item) {
     <input type="hidden" id="ef-label" value="${esc(item.label||'')}"/>
     <label>URL</label><input id="ef-url" value="${esc(item.url||'')}" placeholder="https://..."/>
     <label>설명 (부제목)</label><input id="ef-sub" value="${esc(item.sub||'')}" placeholder="예: YouTube 재생목록"/>
+    ${isBooks ? `
+    <div style="height:1px;background:var(--border);margin:8px 0"></div>
+    <label style="color:var(--gold)">📗 저서 구매 링크 (쿠팡)</label>
+    <input id="ef-coupang" value="${esc(item.coupang||'')}" placeholder="https://link.coupang.com/..."/>
+    ` : ''}
   `;
 }
 
@@ -875,6 +807,7 @@ window.saveItem = async () => {
     if (!title) { alert('이름을 입력하세요'); return; }
     const items = cache[key] || [];
     const iconUrl = document.getElementById('ef-icon-url')?.value || '';
+    const coupangEl = document.getElementById('ef-coupang');
     data = {
       title,
       label: document.getElementById('ef-label').value.trim(),
@@ -882,6 +815,7 @@ window.saveItem = async () => {
       iconUrl,
       url:   document.getElementById('ef-url').value.trim(),
       sub:   document.getElementById('ef-sub').value.trim(),
+      coupang: coupangEl ? coupangEl.value.trim() : '',
       order: id ? ((items.find(i=>i.id===id)||{}).order||0) : items.length
     };
   }
