@@ -590,7 +590,6 @@ function renderLinks(key) {
           </div>
           <div class="pc-iframe-wrap" id="iframe-${cardId}"></div>
           <div class="pc-info">
-            <div class="pc-label">${esc(item.label||'')}</div>
             <div class="pc-title">${esc(item.title)}</div>
             <div class="pc-sub">${esc(item.sub||'YouTube')}</div>
           </div>
@@ -605,9 +604,8 @@ function renderLinks(key) {
       return `
         <a class="playlist-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
           <div class="pc-info">
-            <div class="pc-label">${esc(item.label||'')}</div>
-            <div class="pc-title">${esc(item.icon||'')} ${esc(item.title)}</div>
-            <div class="pc-sub">🔗 ${esc(item.sub||'열기')}</div>
+            <div class="pc-title" style="font-size:18px;padding-right:28px">${esc(item.icon||'')} ${esc(item.title)}</div>
+            <div class="pc-sub" style="font-size:13px">🔗 ${esc(item.sub||'열기')}</div>
           </div>
           <span class="pc-arrow">›</span>
           <button class="edit-btn" onclick="event.preventDefault();event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
