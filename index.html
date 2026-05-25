@@ -230,18 +230,17 @@ body.admin-on .add-btn{display:flex;}
 <!-- ── 공지사항 ── -->
 <section id="tab-notice" class="page-section active">
 <div class="admin-bar" id="ab-notice"><span>✏️</span> 관리자 모드 — 공지를 추가하거나 수정할 수 있습니다</div>
-  <button class="add-btn" onclick="openAdd('notices','notice')">＋ 공지 추가</button>
   <div id="list-notices"></div>
+  <button class="add-btn" onclick="openAdd('notices','notice')">＋ 공지 추가</button>
 </section>
 
 <!-- ── 1. 기도 ── -->
 <section id="tab-prayer" class="page-section">
 <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
 <div id="list-prayer1"></div>
-  <button class="add-btn" onclick="openAdd('prayer1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
   <div id="list-prayer2"></div>
-  <button class="add-btn" onclick="openAdd('prayer2','link')">＋ 항목 추가</button>
+  <button class="add-btn" onclick="openAdd('prayer1','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 2. 찬양과 경배 ── -->
@@ -255,54 +254,44 @@ body.admin-on .add-btn{display:flex;}
 <section id="tab-bible" class="page-section">
 <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
 <div id="list-bible1"></div>
-  <button class="add-btn" onclick="openAdd('bible1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
   <div id="list-bible2"></div>
-  <button class="add-btn" onclick="openAdd('bible2','link')">＋ 항목 추가</button>
+  <button class="add-btn" onclick="openAdd('bible1','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 4. 설교 말씀 ── -->
 <section id="tab-sermon" class="page-section">
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
   <div id="list-sermon1"></div>
-  <a class="yt-external-btn" id="buy-sermon1" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
   <div class="divider"></div>
   <div id="list-sermon2"></div>
-  <a class="yt-external-btn" id="buy-sermon2" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
   <div class="divider"></div>
   <div id="list-sermon3"></div>
-  <a class="yt-external-btn" id="buy-sermon3" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
   <div class="divider"></div>
   <div id="list-sermon4"></div>
-  <a class="yt-external-btn" id="buy-sermon4" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
+  <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 저서별 설교 ── -->
 <section id="tab-books" class="page-section">
-<div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-<button class="add-btn" onclick="openAdd('books1','link')">＋ 항목 추가</button>
+  <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
   <div id="list-books1"></div>
-  <div class="buy-book-section"><div id="buy-book-list-1"></div><button class="add-btn" id="buy-book-add-btn-1" style="display:none" onclick="openAddBuyBook('1')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
   <div id="list-books2"></div>
-  <div class="buy-book-section"><div id="buy-book-list-2"></div><button class="add-btn" id="buy-book-add-btn-2" style="display:none" onclick="openAddBuyBook('2')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
   <div id="list-books3"></div>
-  <div class="buy-book-section"><div id="buy-book-list-3"></div><button class="add-btn" id="buy-book-add-btn-3" style="display:none" onclick="openAddBuyBook('3')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
   <div id="list-books4"></div>
-  <div class="buy-book-section"><div id="buy-book-list-4"></div><button class="add-btn" id="buy-book-add-btn-4" style="display:none" onclick="openAddBuyBook('4')">＋ 구매 링크 추가</button></div>
+  <button class="add-btn" onclick="openAdd('books1','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 5. 치유 ── -->
 <section id="tab-healing" class="page-section">
 <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
 <div id="list-healing1"></div>
-  <button class="add-btn" onclick="openAdd('healing1','link')">＋ 항목 추가</button>
   <div class="divider"></div>
   <div id="list-healing2"></div>
-  <button class="add-btn" onclick="openAdd('healing2','link')">＋ 항목 추가</button>
+  <button class="add-btn" onclick="openAdd('healing1','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 6. 바로가기 ── -->
@@ -835,7 +824,7 @@ window.saveItem = async () => {
 window.deleteItem = async () => {
   if (!editCtx || !editCtx.id) return;
   if (!confirm('삭제하시겠습니까?')) return;
-  const { key, type } = editCtx;
+  const { key, type, id } = editCtx;
 
   if (type === 'buybook') {
     const slot = editCtx.slot || '1';
@@ -846,13 +835,13 @@ window.deleteItem = async () => {
     showToast('삭제됐습니다');
     return;
   }
-  try {
-    await deleteDoc(doc(db, COL(key), editCtx.id));
-    await fetchCol(key);
-    type === 'notice' ? renderNotices() : renderLinks(key);
-    closeEditModal();
-    showToast('삭제됐습니다');
-  } catch(e) { alert('삭제 실패: ' + e.message); }
+  // cache에서 즉시 제거 후 화면 반영
+  cache[key] = (cache[key] || []).filter(i => i.id !== id);
+  type === 'notice' ? renderNotices() : renderLinks(key);
+  closeEditModal();
+  showToast('삭제됐습니다');
+  // Firestore 비동기 삭제
+  deleteDoc(doc(db, COL(key), id)).catch(e => console.error('Firestore 삭제 실패:', e));
 };
 
 window.closeEditModal = () => { document.getElementById('editModal').classList.remove('show'); editCtx = null; };
@@ -866,23 +855,20 @@ function showToast(msg) {
 }
 
 /* ── 순서 변경 ── */
-window.moveItem = async (key, id, dir) => {
-  const items = cache[key] || [];
+window.moveItem = (key, id, dir) => {
+  const items = [...(cache[key] || [])];
   const idx = items.findIndex(i => i.id === id);
+  if (idx < 0) return;
   const newIdx = idx + dir;
   if (newIdx < 0 || newIdx >= items.length) return;
-  // swap
   [items[idx], items[newIdx]] = [items[newIdx], items[idx]];
-  // order 재설정
   items.forEach((item, i) => item.order = i);
   cache[key] = items;
-  // Firestore 업데이트
-  try {
-    await Promise.all(items.map((item, i) =>
-      updateDoc(doc(db, COL(key), item.id), { order: i })
-    ));
-  } catch(e) { console.error('moveItem error:', e); }
-  renderLinks(key);
+  renderLinks(key); // 즉시 반영
+  // Firestore 비동기 업데이트
+  Promise.all(items.map((item, i) =>
+    updateDoc(doc(db, COL(key), item.id), { order: i })
+  )).catch(e => console.error('순서 저장 실패:', e));
 };
 
 /* ── 저서 구매 버튼 (슬롯별) ── */
