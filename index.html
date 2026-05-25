@@ -95,12 +95,27 @@ body.admin-on .link-card{padding-left:44px;}
 .lc-arrow{color:var(--gold);font-size:18px;opacity:.6;flex-shrink:0;}
 
 /* NOTICE CARD */
-.notice-card{background:rgba(201,168,76,.05);border:1px dashed rgba(201,168,76,.2);border-radius:var(--radius);padding:14px;margin-bottom:12px;position:relative;}
-.notice-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px;}
-.notice-card-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.4;}
-.notice-card-date{font-size:10px;color:var(--gold);opacity:.7;flex-shrink:0;margin-top:2px;}
-.notice-card-body{font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:6px;}
-.notice-card-img{width:100%;border-radius:10px;margin-top:8px;display:block;}
+.notice-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color .2s;}
+.notice-card:hover{border-color:rgba(201,168,76,.4);}
+.notice-card-header{display:flex;justify-content:space-between;align-items:center;padding:16px;cursor:pointer;gap:10px;}
+.notice-card-title{font-size:16px;font-weight:600;color:var(--text);line-height:1.4;flex:1;}
+.notice-card-meta{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.notice-card-date{font-size:11px;color:var(--gold);opacity:.8;}
+.notice-card-arrow{color:var(--text-dim);font-size:14px;transition:transform .25s;}
+.notice-card.open .notice-card-arrow{transform:rotate(180deg);}
+.notice-card-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border);margin-top:0;}
+.notice-card.open .notice-card-body{display:block;}
+.notice-card-text{font-size:16px;color:var(--text-dim);line-height:1.9;margin-top:14px;white-space:pre-wrap;}
+.notice-card-img{width:100%;border-radius:10px;margin-top:12px;display:block;}
+.notice-edit-btn{display:none;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:#93c5fd;font-size:10px;padding:3px 9px;border-radius:8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:10px;}
+body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
+
+/* KAKAO BTN */
+.kakao-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:#FEE500;border:none;border-radius:var(--radius);color:#3A1D1D;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;text-decoration:none;margin-top:16px;cursor:pointer;transition:filter .2s;}
+.kakao-btn:hover{filter:brightness(.95);}
+
+/* COUPANG BANNER */
+.coupang-banner{margin-top:14px;width:100%;overflow:hidden;border-radius:var(--radius);}
 
 /* DIVIDER */
 .divider{height:1px;background:var(--border);margin:18px 0;}
@@ -192,6 +207,14 @@ body.admin-on .link-card{padding-left:44px;}
   <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
   <div id="list-notices"></div>
   <button class="add-btn" onclick="openAdd('notices','notice')">＋ 공지 추가</button>
+  <a class="kakao-btn" href="https://open.kakao.com/o/sbqrs0jh" target="_blank" rel="noopener">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.688 1.627 5.04 4.09 6.385L5.1 20.4a.5.5 0 0 0 .72.548l4.54-2.63c.54.082 1.09.132 1.64.132 5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/></svg>
+    카톡으로 문의하기
+  </a>
+  <div class="coupang-banner">
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>new PartnersCoupang.G({"id":991902,"template":"carousel","trackingCode":"AF7978099","width":"100%","height":"140","tsource":""});</script>
+  </div>
 </section>
 
 <section id="tab-prayer" class="page-section">
@@ -406,22 +429,32 @@ function esc(s){ return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').r
 
 /* ── RENDER NOTICES ── */
 function renderNotices() {
-  const items = cache['notices']||[];
+  const items = [...(cache['notices']||[])].reverse(); // 최신순
   const el = document.getElementById('list-notices');
   if (!el) return;
   if (!items.length){ el.innerHTML='<p class="empty-msg">공지사항이 없습니다</p>'; return; }
-  el.innerHTML = items.map(item=>`
-    <div class="notice-card">
-      <div class="notice-card-header">
+  el.innerHTML = items.map((item,i)=>`
+    <div class="notice-card ${i===0?'open':''}" id="nc-${item.id}">
+      <div class="notice-card-header" onclick="toggleNotice('${item.id}')">
         <span class="notice-card-title">${esc(item.title)}</span>
-        <span class="notice-card-date">${esc(item.date||'')}</span>
+        <div class="notice-card-meta">
+          <span class="notice-card-date">${esc(item.date||'')}</span>
+          <span class="notice-card-arrow">▼</span>
+        </div>
       </div>
-      ${item.body?`<div class="notice-card-body">${esc(item.body)}</div>`:''}
-      ${item.imageUrl?`<img class="notice-card-img" src="${esc(item.imageUrl)}" alt="공지 이미지"/>`:''}
-      <button class="edit-btn" onclick="openEdit('notices','${item.id}','notice')">✏ 수정</button>
+      <div class="notice-card-body">
+        ${item.body?`<div class="notice-card-text">${esc(item.body)}</div>`:''}
+        ${item.imageUrl?`<img class="notice-card-img" src="${esc(item.imageUrl)}" alt="공지 이미지"/>`:''}
+        <button class="notice-edit-btn" onclick="openEdit('notices','${item.id}','notice')">✏ 수정</button>
+      </div>
     </div>
   `).join('');
 }
+
+window.toggleNotice = (id) => {
+  const card = document.getElementById('nc-'+id);
+  if (card) card.classList.toggle('open');
+};
 
 /* ── YOUTUBE HELPERS ── */
 function getVid(url){ if(!url)return null; const m=url.match(/(?:youtu\.be\/|[?&]v=)([^&?#]+)/); return m?m[1]:null; }
