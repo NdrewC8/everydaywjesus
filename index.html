@@ -79,7 +79,16 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 }
 .yt-external-btn:hover { background:rgba(255,0,0,.18); border-color:rgba(255,0,0,.4); color:#ff3333; }
 
-/* NOTICE ITEM */
+/* 링크 카드 (바로가기용) */
+.link-card{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;text-decoration:none;color:var(--text);transition:all .2s;position:relative;}
+.link-card:hover{border-color:rgba(201,168,76,.45);transform:translateX(3px);}
+.link-card-icon{width:48px;height:48px;border-radius:12px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;overflow:hidden;}
+.link-card-icon img{width:100%;height:100%;object-fit:cover;}
+.link-card-body{flex:1;min-width:0;}
+.link-card-label{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;}
+.link-card-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.link-card-sub{font-size:12px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.link-card-arrow{color:var(--gold);font-size:18px;opacity:.6;flex-shrink:0;}
 .notice-item{background:rgba(201,168,76,.05);border:1px dashed rgba(201,168,76,.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;position:relative;}
 .notice-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
 .notice-item-title{font-size:14px;font-weight:600;color:var(--text);}
@@ -570,11 +579,12 @@ function renderLinks(key) {
     const isYT = isYoutubeUrl(item.url);
     const embedUrl = buildEmbedUrl(item.url);
     const cardId = 'card-' + item.id;
-
-    // 단일 영상은 바로 썸네일 가능
     const directThumb = vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : null;
 
-    if (isYT) {
+    // 바로가기 탭이거나 유튜브 채널(/@)이면 항상 링크카드
+    const forceLink = key === 'links' || (item.url && (item.url.includes('/@') || item.url.includes('/channel/')));
+
+    if (isYT && !forceLink) {
       return `
         <div class="playlist-card" id="${cardId}">
           <div class="pc-thumb" onclick="playVideo('${cardId}','${(embedUrl||'').replace(/'/g,"\\'")}')">
@@ -601,14 +611,20 @@ function renderLinks(key) {
         </a>
       `;
     } else {
+      // 바로가기탭이거나 일반 외부 링크 → 링크카드 형식
+      const iconHtml = item.iconUrl
+        ? `<img src="${esc(item.iconUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`
+        : (item.icon || '🔗');
       return `
-        <a class="playlist-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
-          <div class="pc-info">
-            <div class="pc-title" style="font-size:18px;padding-right:28px">${esc(item.icon||'')} ${esc(item.title)}</div>
-            <div class="pc-sub" style="font-size:13px">🔗 ${esc(item.sub||'열기')}</div>
+        <a class="link-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
+          <div class="link-card-icon">${iconHtml}</div>
+          <div class="link-card-body">
+            <div class="link-card-label">${esc(item.label||'')}</div>
+            <div class="link-card-title">${esc(item.title)}</div>
+            <div class="link-card-sub">${esc(item.sub||'')}</div>
           </div>
-          <span class="pc-arrow">›</span>
-          <button class="edit-btn" onclick="event.preventDefault();event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
+          <span class="link-card-arrow">›</span>
+          <button class="edit-btn" style="position:absolute;bottom:10px;right:10px;transform:none" onclick="event.preventDefault();event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
         </a>
       `;
     }
@@ -721,12 +737,24 @@ function noticeForm(item) {
   `;
 }
 function linkForm(item) {
+  const hasImg = item.iconUrl && item.iconUrl.startsWith('data:');
   return `
-    <label>이름</label><input id="ef-title" value="${esc(item.title||'')}" placeholder="예: 주일 찬양 플레이리스트"/>
-    <label>라벨 (뱃지)</label><input id="ef-label" value="${esc(item.label||'')}" placeholder="예: 주일 찬양"/>
-    <label>아이콘 (이모지)</label><input id="ef-icon" value="${esc(item.icon||'')}" placeholder="예: 🎵" maxlength="4"/>
+    <label>이름</label><input id="ef-title" value="${esc(item.title||'')}" placeholder="예: 사랑하는교회 홈페이지"/>
+    <label>라벨 (뱃지)</label><input id="ef-label" value="${esc(item.label||'')}" placeholder="예: 공식 홈페이지"/>
+    <label>로고 이미지 (선택)</label>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div id="icon-preview" style="width:44px;height:44px;border-radius:10px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0">
+        ${hasImg ? `<img src="${esc(item.iconUrl)}" style="width:100%;height:100%;object-fit:cover">` : (esc(item.icon||'🔗'))}
+      </div>
+      <div style="flex:1">
+        <input type="file" id="ef-icon-file" accept="image/*" style="font-size:11px;color:var(--text-dim)" onchange="previewIcon(this)"/>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:4px">또는 이모지 직접 입력:</div>
+        <input id="ef-icon" value="${hasImg ? '' : esc(item.icon||'')}" placeholder="예: 🔗" maxlength="4" style="margin-top:4px"/>
+      </div>
+    </div>
+    <input type="hidden" id="ef-icon-url" value="${esc(item.iconUrl||'')}"/>
     <label>URL</label><input id="ef-url" value="${esc(item.url||'')}" placeholder="https://..."/>
-    <label>설명</label><input id="ef-sub" value="${esc(item.sub||'')}" placeholder="예: YouTube 재생목록"/>
+    <label>설명</label><input id="ef-sub" value="${esc(item.sub||'')}" placeholder="예: www.belovedc.com"/>
   `;
 }
 
@@ -742,10 +770,12 @@ window.saveItem = async () => {
     const title = document.getElementById('ef-title').value.trim();
     if (!title) { alert('이름을 입력하세요'); return; }
     const items = cache[key] || [];
+    const iconUrl = document.getElementById('ef-icon-url')?.value || '';
     data = {
       title,
       label: document.getElementById('ef-label').value.trim(),
       icon:  document.getElementById('ef-icon').value.trim(),
+      iconUrl,
       url:   document.getElementById('ef-url').value.trim(),
       sub:   document.getElementById('ef-sub').value.trim(),
       order: id ? ((items.find(i=>i.id===id)||{}).order||0) : items.length
@@ -788,6 +818,20 @@ function showToast(msg) {
 }
 
 /* ── VIDEO PLAYER ── */
+window.previewIcon = (input) => {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    document.getElementById('ef-icon-url').value = dataUrl;
+    document.getElementById('ef-icon').value = '';
+    const preview = document.getElementById('icon-preview');
+    preview.innerHTML = `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
+  };
+  reader.readAsDataURL(file);
+};
+window.previewIcon = window.previewIcon;
 window.playVideo = (cardId, embedUrl) => {
   const card = document.getElementById(cardId);
   if (!card) return;
