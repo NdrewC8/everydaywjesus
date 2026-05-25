@@ -32,7 +32,7 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 
 /* NAV */
 .nav-wrapper{position:sticky;top:0;z-index:100;background:rgba(13,11,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-.nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;justify-content:center;}
+.nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;}
 .nav-tabs::-webkit-scrollbar{display:none;}
 .nav-tab{flex-shrink:0;padding:14px 16px;font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .25s;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;}
 .nav-tab .tab-icon{font-size:18px;}
@@ -89,6 +89,13 @@ body.admin-on .buy-book-btn-edit{display:inline-flex;}
 .branch-btn.map{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.3);color:var(--gold);}
 .branch-btn.map:hover{background:rgba(201,168,76,.2);}
 .branch-empty{text-align:center;color:var(--text-dim);font-size:13px;padding:30px 0;}
+
+/* 순서 변경 버튼 */
+.order-btns{display:none;position:absolute;left:8px;top:50%;transform:translateY(-50%);flex-direction:column;gap:2px;z-index:2;}
+body.admin-on .order-btns{display:flex;}
+.order-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:11px;width:22px;height:22px;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;}
+.order-btn:hover{background:rgba(201,168,76,.35);}
+body.admin-on .playlist-card,.body.admin-on .link-card{padding-left:40px;}
 
 /* 유튜브 외부 버튼 */
 .yt-external-btn {
@@ -293,17 +300,18 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"말씀을 전파하라 때를 얻든지 못 얻든지 항상 힘쓰라 범사에 오래 참음과 가르침으로 경책하며 경계하며 권하라"</p>
     <p class="verse-ref">— 디모데후서 4:2</p>
   </div>
-  <div id="list-sermon1"></div>
   <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
+  <div id="list-sermon1"></div>
+  <a class="yt-external-btn" id="buy-sermon1" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
   <div class="divider"></div>
   <div id="list-sermon2"></div>
-  <button class="add-btn" onclick="openAdd('sermon2','link')">＋ 항목 추가</button>
+  <a class="yt-external-btn" id="buy-sermon2" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
   <div class="divider"></div>
   <div id="list-sermon3"></div>
-  <button class="add-btn" onclick="openAdd('sermon3','link')">＋ 항목 추가</button>
+  <a class="yt-external-btn" id="buy-sermon3" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
   <div class="divider"></div>
   <div id="list-sermon4"></div>
-  <button class="add-btn" onclick="openAdd('sermon4','link')">＋ 항목 추가</button>
+  <a class="yt-external-btn" id="buy-sermon4" href="#" target="_blank" rel="noopener" style="display:none">📗 저서 구매하기</a>
 </section>
 
 <!-- ── 저서별 설교 ── -->
@@ -318,24 +326,18 @@ body.admin-on .add-btn{display:flex;}
     <p class="verse-text">"이 예언의 말씀을 읽는 자와 듣는 자와 그 가운데에 기록한 것을 지키는 자는 복이 있나니"</p>
     <p class="verse-ref">— 요한계시록 1:3</p>
   </div>
+  <button class="add-btn" onclick="openAdd('books1','link')">＋ 항목 추가</button>
   <div id="list-books1"></div>
-  <button class="add-btn" onclick="openAdd('books1','link')">＋ 설교 추가</button>
+  <div class="buy-book-section"><div id="buy-book-list-1"></div><button class="add-btn" id="buy-book-add-btn-1" style="display:none" onclick="openAddBuyBook('1')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
   <div id="list-books2"></div>
-  <button class="add-btn" onclick="openAdd('books2','link')">＋ 설교 추가</button>
+  <div class="buy-book-section"><div id="buy-book-list-2"></div><button class="add-btn" id="buy-book-add-btn-2" style="display:none" onclick="openAddBuyBook('2')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
   <div id="list-books3"></div>
-  <button class="add-btn" onclick="openAdd('books3','link')">＋ 설교 추가</button>
+  <div class="buy-book-section"><div id="buy-book-list-3"></div><button class="add-btn" id="buy-book-add-btn-3" style="display:none" onclick="openAddBuyBook('3')">＋ 구매 링크 추가</button></div>
   <div class="divider"></div>
   <div id="list-books4"></div>
-  <button class="add-btn" onclick="openAdd('books4','link')">＋ 설교 추가</button>
-
-  <!-- 저서 구매 버튼 -->
-  <div class="buy-book-section">
-    <div class="buy-book-label">📦 저서 구매하기</div>
-    <div id="buy-book-list"></div>
-    <button class="add-btn" id="buy-book-add-btn" style="display:none" onclick="openAddBuyBook()">＋ 구매 링크 추가</button>
-  </div>
+  <div class="buy-book-section"><div id="buy-book-list-4"></div><button class="add-btn" id="buy-book-add-btn-4" style="display:none" onclick="openAddBuyBook('4')">＋ 구매 링크 추가</button></div>
 </section>
 
 <!-- ── 5. 치유 ── -->
@@ -654,17 +656,16 @@ function renderLinks(key) {
 
     if (isYT && !forceLink) {
       return `
-        <div class="playlist-card" id="${cardId}">
+        <div class="playlist-card" id="${cardId}" style="position:relative">
+          <div class="order-btns">
+            <button class="order-btn" onclick="moveItem('${key}','${item.id}',-1)" title="위로">▲</button>
+            <button class="order-btn" onclick="moveItem('${key}','${item.id}',1)" title="아래로">▼</button>
+          </div>
           <div class="pc-thumb" onclick="playVideo('${cardId}','${(embedUrl||'').replace(/'/g,"\\'")}')">
-            <img id="thumb-${cardId}"
-              src="${directThumb || ''}"
-              alt="${esc(item.title)}"
-              style="${directThumb ? '' : 'display:none'}"
+            <img id="thumb-${cardId}" src="${directThumb || ''}" alt="${esc(item.title)}" style="${directThumb ? '' : 'display:none'}"
               onerror="this.style.display='none';document.getElementById('thumb-placeholder-${cardId}').style.display='flex'">
             <div id="thumb-placeholder-${cardId}" class="pc-thumb-placeholder" style="${directThumb ? 'display:none' : ''}">🎵</div>
-            <div class="pc-play-overlay">
-              <div class="pc-play-btn">▶</div>
-            </div>
+            <div class="pc-play-overlay"><div class="pc-play-btn">▶</div></div>
           </div>
           <div class="pc-iframe-wrap" id="iframe-${cardId}"></div>
           <div class="pc-info">
@@ -679,12 +680,15 @@ function renderLinks(key) {
         </a>
       `;
     } else {
-      // 바로가기탭이거나 일반 외부 링크 → 링크카드 형식
       const iconHtml = item.iconUrl
         ? `<img src="${esc(item.iconUrl)}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`
         : (item.icon || '🔗');
       return `
-        <a class="link-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
+        <a class="link-card" href="${esc(item.url||'#')}" target="_blank" rel="noopener" style="position:relative">
+          <div class="order-btns">
+            <button class="order-btn" onclick="event.preventDefault();event.stopPropagation();moveItem('${key}','${item.id}',-1)">▲</button>
+            <button class="order-btn" onclick="event.preventDefault();event.stopPropagation();moveItem('${key}','${item.id}',1)">▼</button>
+          </div>
           <div class="link-card-icon">${iconHtml}</div>
           <div class="link-card-body">
             <div class="link-card-label">${esc(item.label||'')}</div>
@@ -774,6 +778,11 @@ function toggleAdmin(on) {
   btn.classList.toggle('on', on);
   btn.textContent = on ? '✓ 관리중 (로그아웃)' : '⚙ 관리';
   document.querySelectorAll('.admin-bar').forEach(el => el.classList.toggle('show', on));
+  // 구매 링크 추가 버튼 표시
+  ['1','2','3','4'].forEach(slot => {
+    const b = document.getElementById('buy-book-add-btn-' + slot);
+    if (b) b.style.display = on ? 'flex' : 'none';
+  });
 }
 
 /* ── EDIT CTX ── */
@@ -835,15 +844,15 @@ window.saveItem = async () => {
     const title = document.getElementById('ef-title').value.trim();
     const icon  = document.getElementById('ef-icon').value.trim();
     const url   = document.getElementById('ef-url').value.trim();
+    const slot  = editCtx.slot || '1';
     if (!title) { alert('버튼 이름을 입력하세요'); return; }
-    const raw = localStorage.getItem(BUY_BOOK_KEY);
-    let books = raw ? JSON.parse(raw) : [];
+    let books = getBuyBooks(slot);
     if (id) {
       books = books.map(b => b.id === id ? { ...b, title, icon, url } : b);
     } else {
       books.push({ id: 'b' + Date.now(), title, icon, url });
     }
-    localStorage.setItem(BUY_BOOK_KEY, JSON.stringify(books));
+    setBuyBooks(slot, books);
     await renderBuyBooks();
     closeEditModal();
     showToast('저장됐습니다 ✓');
@@ -888,10 +897,9 @@ window.deleteItem = async () => {
   const { key, type } = editCtx;
 
   if (type === 'buybook') {
-    const raw = localStorage.getItem(BUY_BOOK_KEY);
-    let books = raw ? JSON.parse(raw) : [];
-    books = books.filter(b => b.id !== editCtx.id);
-    localStorage.setItem(BUY_BOOK_KEY, JSON.stringify(books));
+    const slot = editCtx.slot || '1';
+    let books = getBuyBooks(slot).filter(b => b.id !== editCtx.id);
+    setBuyBooks(slot, books);
     await renderBuyBooks();
     closeEditModal();
     showToast('삭제됐습니다');
@@ -916,7 +924,78 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-/* ── 지교회 데이터 ── */
+/* ── 순서 변경 ── */
+window.moveItem = async (key, id, dir) => {
+  const items = cache[key] || [];
+  const idx = items.findIndex(i => i.id === id);
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= items.length) return;
+  // swap
+  [items[idx], items[newIdx]] = [items[newIdx], items[idx]];
+  // order 재설정
+  items.forEach((item, i) => item.order = i);
+  cache[key] = items;
+  // Firestore 업데이트
+  try {
+    await Promise.all(items.map((item, i) =>
+      updateDoc(doc(db, COL(key), item.id), { order: i })
+    ));
+  } catch(e) { console.error('moveItem error:', e); }
+  renderLinks(key);
+};
+
+/* ── 저서 구매 버튼 (슬롯별) ── */
+function getBuyBooks(slot) {
+  const raw = localStorage.getItem(BUY_BOOK_KEY + '_' + slot);
+  return raw ? JSON.parse(raw) : [];
+}
+function setBuyBooks(slot, books) {
+  localStorage.setItem(BUY_BOOK_KEY + '_' + slot, JSON.stringify(books));
+}
+
+async function renderBuyBooks() {
+  ['1','2','3','4'].forEach(slot => {
+    const books = getBuyBooks(slot);
+    const el = document.getElementById('buy-book-list-' + slot);
+    const addBtn = document.getElementById('buy-book-add-btn-' + slot);
+    if (!el) return;
+    if (addBtn) addBtn.style.display = adminOn ? 'flex' : 'none';
+    if (!books.length) { el.innerHTML = ''; return; }
+    el.innerHTML = books.map(b => `
+      <a class="buy-book-btn" href="${esc(b.url)}" target="_blank" rel="noopener">
+        ${esc(b.icon||'📗')} ${esc(b.title)}
+        <button class="buy-book-btn-edit" onclick="event.preventDefault();event.stopPropagation();editBuyBook('${slot}','${b.id}')">✏ 수정</button>
+      </a>
+    `).join('');
+  });
+}
+
+window.openAddBuyBook = (slot) => {
+  editCtx = { type:'buybook', slot, id: null };
+  document.getElementById('editModalTitle').textContent = '구매 링크 추가';
+  document.getElementById('editDeleteBtn').style.display = 'none';
+  document.getElementById('editModalBody').innerHTML = `
+    <label>버튼 이름</label><input id="ef-title" placeholder="예: 치유의 강물 구매하기" />
+    <label>아이콘 (이모지)</label><input id="ef-icon" placeholder="📗" maxlength="4" value="📗"/>
+    <label>쿠팡 링크 URL</label><input id="ef-url" placeholder="https://www.coupang.com/..." />
+  `;
+  document.getElementById('editModal').classList.add('show');
+};
+
+window.editBuyBook = (slot, id) => {
+  const books = getBuyBooks(slot);
+  const b = books.find(x => x.id === id);
+  if (!b) return;
+  editCtx = { type:'buybook', slot, id };
+  document.getElementById('editModalTitle').textContent = '구매 링크 수정';
+  document.getElementById('editDeleteBtn').style.display = 'block';
+  document.getElementById('editModalBody').innerHTML = `
+    <label>버튼 이름</label><input id="ef-title" value="${esc(b.title)}" />
+    <label>아이콘 (이모지)</label><input id="ef-icon" value="${esc(b.icon||'📗')}" maxlength="4"/>
+    <label>쿠팡 링크 URL</label><input id="ef-url" value="${esc(b.url)}" />
+  `;
+  document.getElementById('editModal').classList.add('show');
+};
 const BRANCHES = [
   { name:'강릉 사랑하는교회', addr:'강원 강릉시 율곡로 2745 3층', tel:'033-644-3079', note:'건물 뒤편 주차장에 주차하시면 편리합니다 :)', map:'https://naver.me/G9ppxWBX' },
   { name:'경주 사랑하는교회', addr:'경북 경주시 양정로 269 금학빌딩 3층', tel:'054-773-3079', note:'', map:'https://naver.me/xdMfWVdr' },
@@ -1110,9 +1189,11 @@ window.switchTab = (name, btn, dir) => {
 
   currentTabIdx = newIdx;
 
-  // 탭 버튼 스크롤 (활성 탭이 보이도록)
+  // 탭 버튼 스크롤 (활성 탭이 중앙에 오도록)
   const activeBtn = btn || document.querySelectorAll('.nav-tab')[newIdx];
-  if (activeBtn) activeBtn.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+  if (activeBtn) {
+    activeBtn.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+  }
 };
 
 // 터치 스와이프
