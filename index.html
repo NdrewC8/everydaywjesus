@@ -1028,7 +1028,9 @@ window.editBuyBook = (id) => {
     <label>쿠팡 링크 URL</label><input id="ef-url" value="${esc(b.url)}" />
   `;
   document.getElementById('editModal').classList.add('show');
-}; = (input) => {
+};
+
+window.previewIcon = (input) => {
   if (!input.files || !input.files[0]) return;
   const file = input.files[0];
   const reader = new FileReader();
@@ -1041,7 +1043,6 @@ window.editBuyBook = (id) => {
   };
   reader.readAsDataURL(file);
 };
-window.previewIcon = window.previewIcon;
 window.playVideo = (cardId, embedUrl) => {
   const card = document.getElementById(cardId);
   if (!card) return;
