@@ -262,27 +262,15 @@ body.admin-on .add-btn{display:flex;}
 <!-- ── 4. 설교 말씀 ── -->
 <section id="tab-sermon" class="page-section">
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div id="list-sermon1"></div>
-  <div class="divider"></div>
-  <div id="list-sermon2"></div>
-  <div class="divider"></div>
-  <div id="list-sermon3"></div>
-  <div class="divider"></div>
-  <div id="list-sermon4"></div>
-  <button class="add-btn" onclick="openAdd('sermon1','link')">＋ 항목 추가</button>
+  <div id="list-sermon"></div>
+  <button class="add-btn" onclick="openAdd('sermon','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 저서별 설교 ── -->
 <section id="tab-books" class="page-section">
   <div class="admin-bar"><span>✏️</span> 관리자 모드 — 항목을 추가하거나 수정할 수 있습니다</div>
-  <div id="list-books1"></div>
-  <div class="divider"></div>
-  <div id="list-books2"></div>
-  <div class="divider"></div>
-  <div id="list-books3"></div>
-  <div class="divider"></div>
-  <div id="list-books4"></div>
-  <button class="add-btn" onclick="openAdd('books1','link')">＋ 항목 추가</button>
+  <div id="list-books"></div>
+  <button class="add-btn" onclick="openAdd('books','link')">＋ 항목 추가</button>
 </section>
 
 <!-- ── 5. 치유 ── -->
@@ -424,6 +412,8 @@ const SEED = {
   books2: [],
   books3: [],
   books4: [],
+  sermon: [],
+  books: [],
   truth: [
     { label:'진실의 방', title:'듣는 귀가 필요한 분께', icon:'✝️', url:'https://www.youtube.com/playlist?list=PLkwxjHscKmInX9yzNHQZgleuyUDG-Gp9r', sub:'YouTube 재생목록', order:0 }
   ]
@@ -457,9 +447,28 @@ async function seedIfEmpty(key) {
   }
 }
 
+/* ── 데이터 이전: sermon1~4 → sermon, books1~4 → books ── */
+async function migrateToUnified(oldKeys, newKey) {
+  try {
+    const newSnap = await getDocs(collection(db, COL(newKey)));
+    if (!newSnap.empty) return; // 이미 이전됨
+
+    let order = 0;
+    for (const oldKey of oldKeys) {
+      const snap = await getDocs(collection(db, COL(oldKey)));
+      for (const d of snap.docs) {
+        const data = { ...d.data(), order: order++ };
+        await addDoc(collection(db, COL(newKey)), { ...data, createdAt: serverTimestamp() });
+      }
+    }
+    console.log(`✓ ${newKey} 이전 완료`);
+  } catch(e) {
+    console.error('migrate error:', newKey, e);
+  }
+}
+
 /* ── INIT: seed + render all ── */
 async function init() {
-  // 10초 타임아웃 - Firebase 연결 실패해도 화면은 보여줌
   const timeout = setTimeout(() => {
     console.warn('Firebase timeout - rendering anyway');
     renderAll();
@@ -469,6 +478,12 @@ async function init() {
   try {
     const keys = Object.keys(SEED);
     await Promise.all(keys.map(seedIfEmpty));
+
+    // sermon1~4 → ewj_sermon 이전
+    await migrateToUnified(['sermon1','sermon2','sermon3','sermon4'], 'sermon');
+    // books1~4 → ewj_books 이전
+    await migrateToUnified(['books1','books2','books3','books4'], 'books');
+
     await Promise.all(keys.map(fetchCol));
   } catch(e) {
     console.error('init error:', e);
@@ -482,7 +497,7 @@ function renderAll() {
   renderNotices();
   ['prayer1','prayer2','praise','bible1','bible2',
    'sermon1','sermon2','sermon3','sermon4',
-   'books1','books2','books3','books4',
+   'sermon','books1','books2','books3','books4','books',
    'healing1','healing2','links','truth'].forEach(renderLinks);
   renderBuyBooks();
   renderBranch('');
@@ -557,7 +572,16 @@ function renderLinks(key) {
   const items = cache[key] || [];
   const el = document.getElementById('list-' + key);
   if (!el) return;
-  if (!items.length) { el.innerHTML = '<p class="empty-msg">항목이 없습니다</p>'; return; }
+  if (!items.length) {
+    el.innerHTML = '';
+    // 바로 앞 divider 숨기기
+    const prev = el.previousElementSibling;
+    if (prev && prev.classList.contains('divider')) prev.style.display = 'none';
+    return;
+  }
+  // divider 다시 표시
+  const prev = el.previousElementSibling;
+  if (prev && prev.classList.contains('divider')) prev.style.display = '';
 
   el.innerHTML = items.map(item => {
     const vid = getYoutubeId(item.url);
