@@ -25,10 +25,8 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .admin-toggle:hover{background:rgba(201,168,76,.2);color:var(--gold);}
 .admin-toggle.on{background:rgba(37,99,235,.2);border-color:rgba(37,99,235,.4);color:#93c5fd;}
 
-/* NOTICE BAR */
-.notice-bar{background:linear-gradient(90deg,rgba(201,168,76,.08),rgba(201,168,76,.04));border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:10px;}
-.notice-label{flex-shrink:0;background:var(--gold);color:var(--deep);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.05em;}
-.notice-text{font-size:12px;color:var(--text-dim);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* NOTICE BAR - 제거 */
+.notice-bar{display:none;}
 
 /* NAV */
 .nav-wrapper{position:sticky;top:0;z-index:100;background:rgba(13,11,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
@@ -42,16 +40,16 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 /* SECTIONS */
 .page-section{display:none;min-height:60vh;padding:24px 18px 80px;max-width:640px;margin:0 auto;position:relative;}
 .page-section.active{display:block;}
-.section-header{text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border);}
-.section-icon{font-size:40px;margin-bottom:10px;display:block;}
-.section-title{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--gold-light);margin-bottom:6px;}
-.section-desc{font-size:14px;color:var(--text-dim);line-height:1.7;}
+.section-header{text-align:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.section-icon{display:none;}
+.section-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--gold-light);margin-bottom:5px;}
+.section-desc{font-size:13px;color:var(--text-dim);line-height:1.7;}
 
 /* BADGE */
 .badge{display:inline-block;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;}
 
 /* PLAYLIST CARD */
-.playlist-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;transition:border-color .2s;text-decoration:none;display:block;color:var(--text);position:relative;overflow:hidden;}
+.playlist-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;margin-bottom:0;transition:border-color .2s;text-decoration:none;display:block;color:var(--text);position:relative;overflow:hidden;}
 .playlist-card:hover{border-color:rgba(201,168,76,.45);}
 .pc-thumb{width:100%;aspect-ratio:16/9;background:#111;position:relative;overflow:hidden;cursor:pointer;}
 .pc-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -102,11 +100,18 @@ body.admin-on .playlist-card,.body.admin-on .link-card{padding-left:40px;}
   display:flex; align-items:center; justify-content:center; gap:8px;
   width:100%; padding:13px;
   background:rgba(255,0,0,.08); border:1px solid rgba(255,0,0,.2);
-  color:#ff6b6b; font-size:14px; font-weight:600; border-radius:var(--radius);
+  color:#ff6b6b; font-size:14px; font-weight:600; border-radius:0 0 var(--radius) var(--radius);
   text-decoration:none; transition:all .2s; font-family:'Noto Sans KR',sans-serif;
-  margin-bottom:20px; margin-top:-2px;
+  margin-bottom:4px; margin-top:0;
 }
 .yt-external-btn:hover { background:rgba(255,0,0,.18); border-color:rgba(255,0,0,.4); color:#ff3333; }
+
+.yt-btn-wrap{margin-bottom:20px;}
+.buy-book-label{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:.05em;}
+.buy-book-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:linear-gradient(135deg,#e6820a,#c96f00);border:none;border-radius:var(--radius);color:#fff;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;text-decoration:none;margin-bottom:6px;cursor:pointer;transition:filter .2s;}
+.buy-book-btn:hover{filter:brightness(1.1);}
+.buy-book-btn-edit{display:none;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:10px;padding:3px 9px;border-radius:8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-left:8px;}
+body.admin-on .buy-book-btn-edit{display:inline-flex;}
 
 /* 링크 카드 (바로가기용) */
 .link-card{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;text-decoration:none;color:var(--text);transition:all .2s;position:relative;}
@@ -656,28 +661,30 @@ function renderLinks(key) {
 
     if (isYT && !forceLink) {
       return `
-        <div class="playlist-card" id="${cardId}" style="position:relative">
-          <div class="order-btns">
-            <button class="order-btn" onclick="moveItem('${key}','${item.id}',-1)" title="위로">▲</button>
-            <button class="order-btn" onclick="moveItem('${key}','${item.id}',1)" title="아래로">▼</button>
+        <div class="yt-btn-wrap">
+          <div class="playlist-card" id="${cardId}" style="position:relative">
+            <div class="order-btns">
+              <button class="order-btn" onclick="moveItem('${key}','${item.id}',-1)" title="위로">▲</button>
+              <button class="order-btn" onclick="moveItem('${key}','${item.id}',1)" title="아래로">▼</button>
+            </div>
+            <div class="pc-thumb" onclick="playVideo('${cardId}','${(embedUrl||'').replace(/'/g,"\\'")}')">
+              <img id="thumb-${cardId}" src="${directThumb || ''}" alt="${esc(item.title)}" style="${directThumb ? '' : 'display:none'}"
+                onerror="this.style.display='none';document.getElementById('thumb-placeholder-${cardId}').style.display='flex'">
+              <div id="thumb-placeholder-${cardId}" class="pc-thumb-placeholder" style="${directThumb ? 'display:none' : ''}">🎵</div>
+              <div class="pc-play-overlay"><div class="pc-play-btn">▶</div></div>
+            </div>
+            <div class="pc-iframe-wrap" id="iframe-${cardId}"></div>
+            <div class="pc-info">
+              <div class="pc-title">${esc(item.title)}</div>
+              <div class="pc-sub">${esc(item.sub||'YouTube')}</div>
+            </div>
+            <button class="edit-btn" onclick="event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
           </div>
-          <div class="pc-thumb" onclick="playVideo('${cardId}','${(embedUrl||'').replace(/'/g,"\\'")}')">
-            <img id="thumb-${cardId}" src="${directThumb || ''}" alt="${esc(item.title)}" style="${directThumb ? '' : 'display:none'}"
-              onerror="this.style.display='none';document.getElementById('thumb-placeholder-${cardId}').style.display='flex'">
-            <div id="thumb-placeholder-${cardId}" class="pc-thumb-placeholder" style="${directThumb ? 'display:none' : ''}">🎵</div>
-            <div class="pc-play-overlay"><div class="pc-play-btn">▶</div></div>
-          </div>
-          <div class="pc-iframe-wrap" id="iframe-${cardId}"></div>
-          <div class="pc-info">
-            <div class="pc-title">${esc(item.title)}</div>
-            <div class="pc-sub">${esc(item.sub||'YouTube')}</div>
-          </div>
-          <button class="edit-btn" onclick="event.stopPropagation();openEdit('${key}','${item.id}','link')">✏ 수정</button>
+          <a class="yt-external-btn" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+            YouTube에서 보기
+          </a>
         </div>
-        <a class="yt-external-btn" href="${esc(item.url||'#')}" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-          YouTube에서 보기
-        </a>
       `;
     } else {
       const iconHtml = item.iconUrl
