@@ -35,6 +35,11 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .logo-btn:hover{transform:scale(1.08);}
 .logo-btn img{width:100%;height:100%;object-fit:cover;}
 .header-inner{display:flex;align-items:center;justify-content:center;gap:14px;position:relative;}
+/* SHARE BTN */
+.share-btn{background:none;border:none;cursor:pointer;padding:0;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;color:var(--text-dim);}
+.share-btn:hover{transform:scale(1.08);color:var(--gold);}
+.share-btn svg{width:28px;height:28px;}
+
 /* NAV */
 .nav-wrapper{position:sticky;top:0;z-index:100;background:rgba(13,11,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
 .nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;}
@@ -203,6 +208,12 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
       <h1 class="site-title">매일 매일을 주님께</h1>
       <p class="site-subtitle">EVERYDAY WITH JESUS</p>
     </div>
+    <button class="share-btn" onclick="shareApp()" title="공유하기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+    </button>
   </div>
 </header>
 
@@ -966,6 +977,32 @@ window.addEventListener('beforeinstallprompt', e => {
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
 });
+
+window.shareApp = async () => {
+  const shareData = {
+    title: '매매주 - 매일 매일을 주님께',
+    text: '매일 기도, 찬양, 성경, 설교를 한 곳에서! 사랑하는교회 앱 매매주를 사용해보세요 🙏',
+    url: 'https://ndrewc8.github.io/everydaywjesus/'
+  };
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch(e) {
+      if (e.name !== 'AbortError') copyLink(shareData.url);
+    }
+  } else {
+    copyLink(shareData.url);
+  }
+};
+
+function copyLink(url) {
+  navigator.clipboard?.writeText(url).then(()=>{
+    showToast('링크가 복사됐습니다 ✓');
+  }).catch(()=>{
+    showToast('링크: ' + url);
+  });
+}
+
 window.installApp = async () => {
   if (deferredPrompt) {
     deferredPrompt.prompt();
