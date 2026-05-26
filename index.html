@@ -31,14 +31,16 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 
 
 /* LOGO BTN */
-.logo-btn{background:none;border:none;cursor:pointer;padding:0;width:52px;height:52px;border-radius:14px;overflow:hidden;transition:transform .2s;flex-shrink:0;}
+.logo-btn{background:none;border:none;cursor:pointer;padding:4px 0 0;width:52px;display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;transition:transform .2s;}
 .logo-btn:hover{transform:scale(1.08);}
-.logo-btn img{width:100%;height:100%;object-fit:cover;}
+.logo-btn img{width:40px;height:40px;border-radius:10px;object-fit:cover;display:block;}
+.logo-btn-label{font-size:10px;font-family:'Noto Sans KR',sans-serif;font-weight:500;color:var(--text-dim);letter-spacing:.02em;}
 .header-inner{display:flex;align-items:center;justify-content:center;gap:14px;position:relative;}
 /* SHARE BTN */
-.share-btn{background:#fff;border:none;cursor:pointer;padding:0;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;color:#F472B6;box-shadow:0 2px 8px rgba(0,0,0,.25);}
+.share-btn{background:none;border:none;cursor:pointer;padding:4px 0 0;width:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex-shrink:0;transition:transform .2s;color:var(--gold);}
 .share-btn:hover{transform:scale(1.08);}
 .share-btn svg{width:26px;height:26px;}
+.share-btn-label{font-size:10px;font-family:'Noto Sans KR',sans-serif;font-weight:500;letter-spacing:.02em;}
 
 /* NAV */
 .nav-wrapper{position:sticky;top:0;z-index:100;background:rgba(13,11,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
@@ -131,8 +133,9 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 .kakao-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:#FEE500;border:none;border-radius:var(--radius);color:#3A1D1D;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;text-decoration:none;margin-top:16px;cursor:pointer;transition:filter .2s;}
 .kakao-btn:hover{filter:brightness(.95);}
 
-/* COUPANG BANNER */
-.coupang-banner{margin-top:14px;width:100%;overflow:hidden;border-radius:var(--radius);}
+/* HEAVEN LIB BTN */
+.heaven-lib-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:linear-gradient(135deg,#6B21A8,#9333EA);border:none;border-radius:var(--radius);color:#fff;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;text-decoration:none;margin-top:10px;cursor:pointer;transition:filter .2s;}
+.heaven-lib-btn:hover{filter:brightness(1.1);}
 
 /* DIVIDER */
 .divider{height:1px;background:var(--border);margin:18px 0;}
@@ -203,6 +206,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
   <div class="header-inner">
     <button class="logo-btn" id="logoBtn" onclick="installApp()" title="앱 설치">
       <img src="logo.png" alt="매매주 로고"/>
+      <span class="logo-btn-label">앱 설치</span>
     </button>
     <div>
       <h1 class="site-title">매일 매일을 주님께</h1>
@@ -213,6 +217,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
         <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
         <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
       </svg>
+      <span class="share-btn-label">공유하기</span>
     </button>
   </div>
 </header>
@@ -241,10 +246,9 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.688 1.627 5.04 4.09 6.385L5.1 20.4a.5.5 0 0 0 .72.548l4.54-2.63c.54.082 1.09.132 1.64.132 5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/></svg>
     카톡으로 문의하기
   </a>
-  <div class="coupang-banner">
-    <script src="https://ads-partners.coupang.com/g.js"></script>
-    <script>new PartnersCoupang.G({"id":991902,"template":"carousel","trackingCode":"AF7978099","width":"100%","height":"140","tsource":""});</script>
-  </div>
+  <a class="heaven-lib-btn" href="https://influencers.coupang.com/s/kingofsallim" target="_blank" rel="noopener">
+    📚 천국의 도서관
+  </a>
 </section>
 
 <section id="tab-prayer" class="page-section">
