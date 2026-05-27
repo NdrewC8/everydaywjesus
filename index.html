@@ -25,9 +25,7 @@ body{background:var(--deep);color:var(--text);font-family:'Noto Sans KR',sans-se
 .site-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,.1),transparent 70%);pointer-events:none;}
 .site-title{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,38px);font-weight:700;color:var(--gold-light);letter-spacing:.02em;}
 .site-subtitle{font-size:11px;color:var(--text-dim);margin-top:6px;letter-spacing:.15em;}
-.admin-toggle{position:absolute;top:14px;right:14px;background:rgba(201,168,76,.1);border:1px solid var(--border);color:var(--text-dim);font-size:11px;padding:6px 12px;border-radius:20px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;z-index:10;}
-.admin-toggle:hover{background:rgba(201,168,76,.2);color:var(--gold);}
-.admin-toggle.on{background:rgba(37,99,235,.2);border-color:rgba(37,99,235,.4);color:#93c5fd;}
+.admin-toggle{display:none;}
 
 
 /* LOGO BTN */
@@ -188,6 +186,10 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 /* FOOTER */
 .site-footer{text-align:center;padding:24px 20px;border-top:1px solid var(--border);color:var(--text-dim);font-size:11px;letter-spacing:.1em;}
 
+
+/* FOOTER ADMIN LINK */
+.footer-admin-link{color:var(--text-dim);text-decoration:none;opacity:.5;transition:opacity .2s;}
+.footer-admin-link:hover{opacity:1;color:var(--gold);}
 /* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
@@ -202,7 +204,6 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 <div class="toast" id="toast"></div>
 
 <header class="site-header">
-  <button class="admin-toggle" id="adminToggleBtn" onclick="openLoginModal()">⚙ 관리</button>
   <div class="header-inner">
     <button class="logo-btn" id="logoBtn" onclick="installApp()" title="앱 설치">
       <img src="logo.png" alt="매매주 로고"/>
@@ -247,7 +248,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
     카톡으로 문의하기
   </a>
   <a class="heaven-lib-btn" href="https://influencers.coupang.com/s/kingofsallim" target="_blank" rel="noopener">
-    📚 천국의 도서관
+    🌍 아프리카 선교 후원
   </a>
 </section>
 
@@ -304,7 +305,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
   <button class="add-btn" onclick="openAdd('truth','link')">＋ 항목 추가</button>
 </section>
 
-<footer class="site-footer">© 2025 Everyday with Jesus · everydaywjesus.com</footer>
+<footer class="site-footer"><a href="#" onclick="openLoginModal();return false;" class="footer-admin-link">© 2025</a> Everyday with Jesus · everydaywjesus.com</footer>
 
 <!-- LOGIN MODAL -->
 <div class="modal-bg" id="loginModal">
@@ -724,9 +725,6 @@ document.getElementById('loginPw').addEventListener('keydown',e=>{if(e.key==='En
 function toggleAdmin(on) {
   adminOn=on;
   document.body.classList.toggle('admin-on',on);
-  const btn=document.getElementById('adminToggleBtn');
-  btn.classList.toggle('on',on);
-  btn.textContent=on?'✓ 관리중 (로그아웃)':'⚙ 관리';
   document.querySelectorAll('.admin-bar').forEach(el=>el.classList.toggle('show',on));
 }
 
