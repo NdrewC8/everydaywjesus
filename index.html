@@ -957,9 +957,17 @@ window.switchTab = (name, btn) => {
 };
 
 // 스와이프
-let tx=0,ty=0;
-document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+let tx=0,ty=0,tTarget=null;
+document.addEventListener('touchstart',e=>{
+  tx=e.touches[0].clientX;
+  ty=e.touches[0].clientY;
+  tTarget=e.target;
+},{passive:true});
 document.addEventListener('touchend',e=>{
+  // 탭바 위에서 시작한 스와이프는 페이지 전환 안 함
+  const navEl = document.querySelector('.nav-wrapper');
+  if(navEl && navEl.contains(tTarget)) return;
+
   const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
   if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){
     const ni=Math.max(0,Math.min(TAB_ORDER.length-1,currentTabIdx+(dx<0?1:-1)));
