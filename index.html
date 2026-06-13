@@ -134,6 +134,8 @@ body.admin-on .link-card{padding-left:44px;}
 .notice-card-img{width:100%;border-radius:10px;margin-top:12px;display:block;}
 .notice-edit-btn{display:none;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:#93c5fd;font-size:10px;padding:3px 9px;border-radius:8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:10px;}
 body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
+.notice-link-btn{display:inline-flex;align-items:center;margin-top:12px;padding:9px 16px;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);border-radius:20px;color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;font-family:'Noto Sans KR',sans-serif;transition:all .2s;}
+.notice-link-btn:hover{background:rgba(201,168,76,.25);}
 
 /* KAKAO BTN */
 .kakao-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:#FEE500;border:none;border-radius:var(--radius);color:#3A1D1D;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;text-decoration:none;margin-top:16px;cursor:pointer;transition:filter .2s;}
@@ -477,8 +479,12 @@ function renderNotices() {
   if (!el) return;
   if (!items.length){ el.innerHTML='<p class="empty-msg">공지사항이 없습니다</p>'; return; }
   el.innerHTML = items.map((item,i)=>`
-    <div class="notice-card" id="nc-${item.id}">
-      <div class="notice-card-header" onclick="toggleNotice('${item.id}')">
+    <div class="notice-card" id="nc-${item.id}" style="position:relative">
+      <div class="order-btns" style="top:18px;transform:none">
+        <button class="order-btn" onclick="moveItem('notices','${item.id}',-1)">▲</button>
+        <button class="order-btn" onclick="moveItem('notices','${item.id}',1)">▼</button>
+      </div>
+      <div class="notice-card-header" onclick="toggleNotice('${item.id}')" style="padding-left:40px">
         <span class="notice-card-title">${esc(item.title)}</span>
         <div class="notice-card-meta">
           <span class="notice-card-date">${esc(item.date||'')}</span>
@@ -488,6 +494,7 @@ function renderNotices() {
       <div class="notice-card-body">
         ${item.body?`<div class="notice-card-text">${esc(item.body)}</div>`:''}
         ${item.imageUrl?`<img class="notice-card-img" src="${esc(item.imageUrl)}" alt="공지 이미지"/>`:''}
+        ${item.linkUrl?`<a class="notice-link-btn" href="${esc(item.linkUrl)}" target="_blank" rel="noopener">${esc(item.linkText||'자세히 보기')} →</a>`:''}
         <button class="notice-edit-btn" onclick="openEdit('notices','${item.id}','notice')">✏ 수정</button>
       </div>
     </div>
@@ -645,7 +652,7 @@ window.moveItem = (key, id, dir) => {
   [items[idx],items[ni]]=[items[ni],items[idx]];
   items.forEach((item,i)=>item.order=i);
   cache[key]=items;
-  renderLinks(key);
+  key==='notices' ? renderNotices() : renderLinks(key);
   Promise.all(items.map((item,i)=>updateDoc(doc(db,COL(key),item.id),{order:i}))).catch(console.error);
 };
 
@@ -762,6 +769,11 @@ function noticeForm(item) {
     <label>제목</label><input id="ef-title" value="${esc(item.title||'')}" placeholder="공지 제목"/>
     <label>내용</label><textarea id="ef-body">${esc(item.body||'')}</textarea>
     <label>날짜 (예: 2025.05)</label><input id="ef-date" value="${esc(item.date||'')}" placeholder="2025.05"/>
+    <label>링크 버튼 (선택)</label>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input id="ef-link-text" value="${esc(item.linkText||'')}" placeholder="버튼 이름 (예: 자세히 보기)" style="flex:1;margin-bottom:0"/>
+      <input id="ef-link-url" value="${esc(item.linkUrl||'')}" placeholder="https://..." style="flex:2;margin-bottom:0"/>
+    </div>
     <label>이미지 첨부 (선택)</label>
     <div class="img-preview-wrap">
       <input type="file" id="ef-img-file" accept="image/*" onchange="previewNoticeImg(this)" style="font-size:12px;color:var(--text-dim)"/>
@@ -884,7 +896,7 @@ window.saveItem = async () => {
   if(type==='notice'){
     const title=document.getElementById('ef-title').value.trim();
     if(!title){alert('제목을 입력하세요');return;}
-    data={title,body:document.getElementById('ef-body').value.trim(),date:document.getElementById('ef-date').value.trim(),imageUrl:document.getElementById('ef-img-url').value};
+    data={title,body:document.getElementById('ef-body').value.trim(),date:document.getElementById('ef-date').value.trim(),imageUrl:document.getElementById('ef-img-url').value,linkText:document.getElementById('ef-link-text')?.value.trim()||'',linkUrl:document.getElementById('ef-link-url')?.value.trim()||''};
   } else {
     const title=document.getElementById('ef-title').value.trim();
     if(!title){alert('이름을 입력하세요');return;}
