@@ -132,6 +132,24 @@ body.admin-on .link-card{padding-left:44px;}
 .notice-card.open .notice-card-body{display:block;}
 .notice-card-text{font-size:16px;color:var(--text-dim);line-height:1.9;margin-top:14px;white-space:pre-wrap;}
 .notice-card-img{width:100%;border-radius:10px;margin-top:12px;display:block;}
+/* NOTICE IMAGE SLIDER */
+.notice-slider{position:relative;margin-top:12px;overflow:hidden;border-radius:10px;}
+.notice-slider-track{display:flex;transition:transform .35s ease;}
+.notice-slider-track img{width:100%;flex-shrink:0;object-fit:cover;border-radius:10px;display:block;}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);border:none;color:#fff;font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
+.slider-btn.prev{left:8px;}
+.slider-btn.next{right:8px;}
+.slider-dots{display:flex;justify-content:center;gap:5px;margin-top:8px;}
+.slider-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s;}
+.slider-dot.active{background:var(--gold);}
+
+/* NOTICE IMG FORM */
+.img-list-wrap{margin-bottom:10px;}
+.img-list-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:8px 10px;}
+.img-list-thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0;}
+.img-list-name{flex:1;font-size:11px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.img-list-del{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;font-size:11px;padding:3px 8px;border-radius:6px;cursor:pointer;white-space:nowrap;}
+
 .notice-edit-btn{display:none;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:#93c5fd;font-size:10px;padding:3px 9px;border-radius:8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:10px;}
 body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 .notice-link-btn{display:inline-flex;align-items:center;margin-top:12px;padding:9px 16px;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);border-radius:20px;color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;font-family:'Noto Sans KR',sans-serif;transition:all .2s;}
@@ -493,7 +511,18 @@ function renderNotices() {
       </div>
       <div class="notice-card-body">
         ${item.body?`<div class="notice-card-text">${esc(item.body)}</div>`:''}
-        ${item.imageUrl?`<img class="notice-card-img" src="${esc(item.imageUrl)}" alt="공지 이미지"/>`:''}
+        ${(()=>{
+          const imgs = item.images?.length ? item.images : (item.imageUrl ? [item.imageUrl] : []);
+          if(!imgs.length) return '';
+          if(imgs.length===1) return `<img class="notice-card-img" src="${esc(imgs[0])}" alt="공지 이미지"/>`;
+          const sid='sl-'+item.id;
+          const dots=imgs.map((_,i)=>`<div class="slider-dot${i===0?' active':''}" onclick="slideTo('${sid}',${i})"></div>`).join('');
+          const slides=imgs.map(src=>`<img src="${esc(src)}" alt="공지 이미지" style="width:100%;flex-shrink:0;object-fit:cover;border-radius:10px;display:block">`).join('');
+          return `<div class="notice-slider" id="${sid}">
+            <div class="notice-slider-track" id="${sid}-track">${slides}</div>
+            ${imgs.length>1?`<button class="slider-btn prev" onclick="slideMove('${sid}',-1)">&#8249;</button><button class="slider-btn next" onclick="slideMove('${sid}',1)">&#8250;</button>`:''}
+          </div><div class="slider-dots" id="${sid}-dots">${dots}</div>`;
+        })()}
         ${item.linkUrl?`<a class="notice-link-btn" href="${esc(item.linkUrl)}" target="_blank" rel="noopener">${esc(item.linkText||'자세히 보기')} →</a>`:''}
         <button class="notice-edit-btn" onclick="openEdit('notices','${item.id}','notice')">✏ 수정</button>
       </div>
@@ -774,12 +803,10 @@ function noticeForm(item) {
       <input id="ef-link-text" value="${esc(item.linkText||'')}" placeholder="버튼 이름 (예: 자세히 보기)" style="flex:1;margin-bottom:0"/>
       <input id="ef-link-url" value="${esc(item.linkUrl||'')}" placeholder="https://..." style="flex:2;margin-bottom:0"/>
     </div>
-    <label>이미지 첨부 (선택)</label>
-    <div class="img-preview-wrap">
-      <input type="file" id="ef-img-file" accept="image/*" onchange="previewNoticeImg(this)" style="font-size:12px;color:var(--text-dim)"/>
-      <img id="ef-img-preview" class="img-preview ${item.imageUrl?'show':''}" src="${esc(item.imageUrl||'')}"/>
-    </div>
-    <input type="hidden" id="ef-img-url" value="${esc(item.imageUrl||'')}"/>
+    <label>이미지 첨부 (선택, 여러 장 가능)</label>
+    <input type="file" id="ef-img-file" accept="image/*" multiple onchange="addNoticeImgs(this)" style="font-size:12px;color:var(--text-dim);margin-bottom:8px"/>
+    <div class="img-list-wrap" id="ef-img-list"></div>
+    <input type="hidden" id="ef-img-urls" value="${esc(JSON.stringify(item.images||( item.imageUrl?[item.imageUrl]:[] )))}"/>
   `;
 }
 
@@ -896,7 +923,9 @@ window.saveItem = async () => {
   if(type==='notice'){
     const title=document.getElementById('ef-title').value.trim();
     if(!title){alert('제목을 입력하세요');return;}
-    data={title,body:document.getElementById('ef-body').value.trim(),date:document.getElementById('ef-date').value.trim(),imageUrl:document.getElementById('ef-img-url').value,linkText:document.getElementById('ef-link-text')?.value.trim()||'',linkUrl:document.getElementById('ef-link-url')?.value.trim()||''};
+    const imgsRaw=document.getElementById('ef-img-urls')?.value||'[]';
+    let imgs=[];try{imgs=JSON.parse(imgsRaw);}catch(e){}
+    data={title,body:document.getElementById('ef-body').value.trim(),date:document.getElementById('ef-date').value.trim(),images:imgs,imageUrl:imgs[0]||'',linkText:document.getElementById('ef-link-text')?.value.trim()||'',linkUrl:document.getElementById('ef-link-url')?.value.trim()||''};
   } else {
     const title=document.getElementById('ef-title').value.trim();
     if(!title){alert('이름을 입력하세요');return;}
