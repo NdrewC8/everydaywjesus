@@ -131,11 +131,11 @@ body.admin-on .link-card{padding-left:44px;}
 .notice-card-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border);margin-top:0;}
 .notice-card.open .notice-card-body{display:block;}
 .notice-card-text{font-size:16px;color:var(--text-dim);line-height:1.9;margin-top:14px;white-space:pre-wrap;}
-.notice-card-img{width:100%;border-radius:10px;margin-top:12px;display:block;}
+.notice-card-img{width:100%;border-radius:10px;margin-top:12px;display:block;max-height:80vh;object-fit:contain;background:#111;}
 /* NOTICE IMAGE SLIDER */
 .notice-slider{position:relative;margin-top:12px;overflow:hidden;border-radius:10px;}
 .notice-slider-track{display:flex;transition:transform .35s ease;}
-.notice-slider-track img{width:100%;flex-shrink:0;object-fit:cover;border-radius:10px;display:block;}
+.notice-slider-track img{width:100%;flex-shrink:0;object-fit:contain;border-radius:10px;display:block;max-height:80vh;background:#111;}
 .slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);border:none;color:#fff;font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
 .slider-btn.prev{left:8px;}
 .slider-btn.next{right:8px;}
@@ -906,6 +906,63 @@ window.previewNoticeImg = (input) => {
     prev.classList.add('show');
   };
   r.readAsDataURL(input.files[0]);
+};
+
+/* ── 공지 이미지 업로드 (압축) ── */
+window.addNoticeImgs = (input) => {
+  if(!input.files?.length) return;
+  const urlsEl = document.getElementById('ef-img-urls');
+  let imgs = [];
+  try { imgs = JSON.parse(urlsEl.value||'[]'); } catch(e){}
+  const files = Array.from(input.files);
+  let loaded = 0;
+  files.forEach(file => {
+    const imgEl = new Image();
+    const reader = new FileReader();
+    reader.onload = e => {
+      imgEl.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 800;
+        let w = imgEl.width, h = imgEl.height;
+        if(w > MAX){ h = Math.round(h*MAX/w); w = MAX; }
+        if(h > MAX){ w = Math.round(w*MAX/h); h = MAX; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(imgEl, 0, 0, w, h);
+        imgs.push(canvas.toDataURL('image/jpeg', 0.6));
+        loaded++;
+        if(loaded === files.length){
+          urlsEl.value = JSON.stringify(imgs);
+          renderImgList(imgs);
+          showToast(`이미지 ${loaded}장 추가됨 ✓`);
+        }
+      };
+      imgEl.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value='';
+};
+
+function renderImgList(imgs) {
+  const el = document.getElementById('ef-img-list');
+  if(!el) return;
+  if(!imgs.length){ el.innerHTML=''; return; }
+  el.innerHTML = imgs.map((src,i)=>`
+    <div class="img-list-item">
+      <img class="img-list-thumb" src="${src}"/>
+      <span class="img-list-name">${i+1}번째 이미지</span>
+      <button class="img-list-del" onclick="removeNoticeImg(${i})">삭제</button>
+    </div>
+  `).join('');
+}
+
+window.removeNoticeImg = (idx) => {
+  const urlsEl = document.getElementById('ef-img-urls');
+  let imgs = [];
+  try { imgs = JSON.parse(urlsEl.value||'[]'); } catch(e){}
+  imgs.splice(idx,1);
+  urlsEl.value = JSON.stringify(imgs);
+  renderImgList(imgs);
 };
 
 window.previewIcon = (input) => {
