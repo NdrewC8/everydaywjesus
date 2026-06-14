@@ -779,6 +779,7 @@ window.openAdd = (key, type) => {
   document.getElementById('editDeleteBtn').style.display='none';
   document.getElementById('editModalBody').innerHTML = type==='notice'?noticeForm({}):linkForm({},key);
   document.getElementById('editModal').classList.add('show');
+  if(type==='notice') renderImgList([]);
 };
 window.openEdit = (key, id, type) => {
   const item=(cache[key]||[]).find(i=>i.id===id);
@@ -788,6 +789,10 @@ window.openEdit = (key, id, type) => {
   document.getElementById('editDeleteBtn').style.display='block';
   document.getElementById('editModalBody').innerHTML = type==='notice'?noticeForm(item):linkForm(item,key);
   document.getElementById('editModal').classList.add('show');
+  if(type==='notice'){
+    const imgs = item.images?.length ? item.images : (item.imageUrl?[item.imageUrl]:[]);
+    renderImgList(imgs);
+  }
 };
 window.closeEditModal = () => {document.getElementById('editModal').classList.remove('show');editCtx=null;};
 document.getElementById('editModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEditModal();});
