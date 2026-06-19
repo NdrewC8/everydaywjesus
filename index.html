@@ -254,14 +254,14 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 <nav class="nav-wrapper">
   <div class="nav-tabs" id="navTabs">
     <button class="nav-tab active" onclick="switchTab('notice',this)"><span class="tab-icon">📢</span>공지</button>
-    <button class="nav-tab" onclick="switchTab('prayer',this)"><span class="tab-icon">🙏</span>기도</button>
-    <button class="nav-tab" onclick="switchTab('praise',this)"><span class="tab-icon">🎵</span>찬양</button>
-    <button class="nav-tab" onclick="switchTab('bible',this)"><span class="tab-icon">📖</span>성경</button>
     <button class="nav-tab" onclick="switchTab('sermon',this)"><span class="tab-icon">🎤</span>설교</button>
     <button class="nav-tab" onclick="switchTab('books',this)"><span class="tab-icon">📗</span>저서별설교</button>
     <button class="nav-tab" onclick="switchTab('healing',this)"><span class="tab-icon">🕊️</span>치유</button>
-    <button class="nav-tab" onclick="switchTab('links',this)"><span class="tab-icon">🔗</span>바로가기</button>
+    <button class="nav-tab" onclick="switchTab('prayer',this)"><span class="tab-icon">🙏</span>기도</button>
+    <button class="nav-tab" onclick="switchTab('praise',this)"><span class="tab-icon">🎵</span>찬양</button>
+    <button class="nav-tab" onclick="switchTab('bible',this)"><span class="tab-icon">📖</span>성경</button>
     <button class="nav-tab" onclick="switchTab('branch',this)"><span class="tab-icon">⛪</span>지교회</button>
+    <button class="nav-tab" onclick="switchTab('links',this)"><span class="tab-icon">🔗</span>바로가기</button>
     <button class="nav-tab" onclick="switchTab('truth',this)"><span class="tab-icon">✝</span>진실의 방</button>
   </div>
 </nav>
@@ -278,24 +278,6 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
   <a class="heaven-lib-btn" href="https://influencers.coupang.com/s/kingofsallim" target="_blank" rel="noopener">
     🌍 아프리카 선교 후원
   </a>
-</section>
-
-<section id="tab-prayer" class="page-section">
-  <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
-  <div id="list-prayer"></div>
-  <button class="add-btn" onclick="openAdd('prayer','link')">＋ 항목 추가</button>
-</section>
-
-<section id="tab-praise" class="page-section">
-  <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
-  <div id="list-praise"></div>
-  <button class="add-btn" onclick="openAdd('praise','link')">＋ 항목 추가</button>
-</section>
-
-<section id="tab-bible" class="page-section">
-  <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
-  <div id="list-bible"></div>
-  <button class="add-btn" onclick="openAdd('bible','link')">＋ 항목 추가</button>
 </section>
 
 <section id="tab-sermon" class="page-section">
@@ -316,15 +298,33 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
   <button class="add-btn" onclick="openAdd('healing','link')">＋ 항목 추가</button>
 </section>
 
-<section id="tab-links" class="page-section">
+<section id="tab-prayer" class="page-section">
   <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
-  <div id="list-links"></div>
-  <button class="add-btn" onclick="openAdd('links','link')">＋ 항목 추가</button>
+  <div id="list-prayer"></div>
+  <button class="add-btn" onclick="openAdd('prayer','link')">＋ 항목 추가</button>
+</section>
+
+<section id="tab-praise" class="page-section">
+  <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
+  <div id="list-praise"></div>
+  <button class="add-btn" onclick="openAdd('praise','link')">＋ 항목 추가</button>
+</section>
+
+<section id="tab-bible" class="page-section">
+  <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
+  <div id="list-bible"></div>
+  <button class="add-btn" onclick="openAdd('bible','link')">＋ 항목 추가</button>
 </section>
 
 <section id="tab-branch" class="page-section">
   <input class="branch-search" placeholder="🔍 지역명 또는 주소 검색..." oninput="filterBranch(this.value)"/>
   <div id="branch-list"></div>
+</section>
+
+<section id="tab-links" class="page-section">
+  <div class="admin-bar"><span>✏️</span> 관리자 모드</div>
+  <div id="list-links"></div>
+  <button class="add-btn" onclick="openAdd('links','link')">＋ 항목 추가</button>
 </section>
 
 <section id="tab-truth" class="page-section">
@@ -1031,7 +1031,7 @@ window.deleteItem = async () => {
 };
 
 /* ── TAB ── */
-const TAB_ORDER=['notice','prayer','praise','bible','sermon','books','healing','links','branch','truth'];
+const TAB_ORDER=['notice','sermon','books','healing','prayer','praise','bible','branch','links','truth'];
 let currentTabIdx=0;
 
 window.switchTab = (name, btn) => {
