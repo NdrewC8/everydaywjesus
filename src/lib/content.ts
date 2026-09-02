@@ -30,34 +30,46 @@ function writeCache(snapshot: PublishedSnapshot): void {
   }
 }
 
+async function readStaticSnapshot(): Promise<PublishedSnapshot | null> {
+  try {
+    const response = await fetch('/content/snapshot.json', { cache: 'no-cache' });
+    const value: unknown = response.ok ? await response.json() : null;
+    return isSnapshot(value) ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function withTimeout<T>(promise: Promise<T>, milliseconds: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => window.setTimeout(() => reject(new Error('Content request timed out')), milliseconds))
+  ]);
+}
+
 export async function loadPublishedSnapshot(): Promise<PublishedSnapshot> {
   const cached = readCache();
+  const staticSnapshot = readStaticSnapshot();
   const database = await getDatabase();
   if (!database) {
-    try {
-      const response = await fetch('/content/snapshot.json', { cache: 'no-cache' });
-      const localSnapshot: unknown = response.ok ? await response.json() : null;
-      if (isSnapshot(localSnapshot)) {
-        writeCache(localSnapshot);
-        return localSnapshot;
-      }
-    } catch {
-      // The bundled fallback still makes the installed app usable offline.
-    }
-    return cached ?? fallbackSnapshot;
+    const localSnapshot = await staticSnapshot;
+    if (localSnapshot) writeCache(localSnapshot);
+    return localSnapshot ?? cached ?? fallbackSnapshot;
   }
 
   try {
     const [collectionName, documentName, ...extra] = SNAPSHOT_PATH.split('/').filter(Boolean);
     if (!collectionName || !documentName || extra.length) throw new Error('Invalid snapshot path');
     const { doc, getDoc } = await import('firebase/firestore');
-    const response = await getDoc(doc(database, collectionName, documentName));
+    const response = await withTimeout(getDoc(doc(database, collectionName, documentName)), 4000);
     const value: unknown = response.exists() ? response.data() : null;
     if (!isSnapshot(value)) throw new Error('Published snapshot schema is invalid');
     writeCache(value);
     return value;
   } catch (error) {
     console.warn('공개 콘텐츠를 불러오지 못해 저장된 콘텐츠를 표시합니다.', error);
-    return cached ?? fallbackSnapshot;
+    const localSnapshot = await staticSnapshot;
+    if (localSnapshot) writeCache(localSnapshot);
+    return localSnapshot ?? cached ?? fallbackSnapshot;
   }
 }

@@ -41,6 +41,7 @@
 .admin-editor h2 { margin: 0 0 5px; color: #173f35; }
 .admin-editor textarea { resize: vertical; line-height: 1.6; }
 .upload-label { border: 1px dashed #bac7c1; border-radius: 12px; background: #f7faf8; padding: 13px; }
+.upload-disabled { margin: 0; border: 1px solid #ead8af; border-radius: 12px; background: #fff8e8; padding: 12px; color: #72561f; font-size: .8rem; line-height: 1.5; }
 .upload-label input { border: 0; padding: 6px 0 0; background: transparent; }
 .editor-actions { display: flex; gap: 8px; margin-top: 8px; }
 .editor-actions span { flex: 1; }

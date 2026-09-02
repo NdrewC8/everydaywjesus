@@ -202,6 +202,9 @@ function Field({ name, label, value, type = 'text', required = false }: { name: 
 
 function ImageUpload({ onUploaded }: { onUploaded: (url: string, thumbnail?: string) => void }) {
   const [busy, setBusy] = useState(false); const [error, setError] = useState('');
+  if (import.meta.env.VITE_IMAGE_UPLOAD_ENABLED !== 'true') {
+    return <p className="upload-disabled">이미지 업로드는 Storage 결제·예산 경고 설정 후 활성화됩니다. 기존 이미지 주소는 그대로 편집할 수 있습니다.</p>;
+  }
   async function upload(file?: File) {
     if (!file) return; setBusy(true); setError('');
     try {

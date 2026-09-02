@@ -15,7 +15,7 @@
 | staging | 개발·QA·기기 테스트 | Firebase preview channel 또는 별도 스테이징 도메인 |
 | production | 실제 회원 서비스 | `www.everydaywjesus.com` |
 
-운영과 스테이징은 별도 Firebase 프로젝트를 사용한다. `.env`와 `.firebaserc`는 저장소에 커밋하지 않는다.
+운영과 스테이징은 별도 Firebase 프로젝트를 사용한다. 비공개 `.env`는 저장소에 커밋하지 않고, 프로젝트 별칭만 담은 `.firebaserc`는 함께 관리한다.
 
 ## 관리자·이관 도구
 

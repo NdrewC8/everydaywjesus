@@ -94,7 +94,7 @@ function HeaderActions() {
   }, []);
 
   async function install() {
-    if (!installPrompt) { window.location.assign('/guide.html'); return; }
+    if (!installPrompt) { window.location.assign('/guide'); return; }
     await installPrompt.prompt();
     const choice = await installPrompt.userChoice;
     if (choice.outcome === 'accepted') setInstallPrompt(null);
@@ -111,7 +111,7 @@ function HeaderActions() {
   }
 
   return <div className="header-actions">
-    <a href="/guide.html">사용 안내</a>
+    <a href="/guide">사용 안내</a>
     {!installed && <button type="button" onClick={install}>{installPrompt ? '앱 설치' : '설치 안내'}</button>}
     <button type="button" onClick={share}>공유</button>
     {status && <span role="status" className="sr-only">{status}</span>}
