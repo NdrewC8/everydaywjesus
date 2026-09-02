@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isEverydayAdmin() {
+      return request.auth != null
+        && request.auth.uid == 'I0CR2L3mP6eUO7PwArNWCRBK6so1';
+    }
+
+    // 기존 beloved-biz.kr 규칙: 별도 서비스이므로 이번 변경에서 유지한다.
+    match /data/{document=**} {
+      allow read, write: if true;
+    }
+    match /notifications/{document=**} {
+      allow read, write: if true;
+    }
+
+    // everydaywjesus.com: 누구나 읽고, 지정된 관리자만 변경할 수 있다.
+    match /ewj_notices/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_prayer1/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_prayer2/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_praise/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_bible1/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_bible2/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_sermon1/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_sermon2/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_sermon3/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_sermon4/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_books1/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_books2/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_books3/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_books4/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_healing1/{document=**} { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_healing2/{document=**} { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_links/{document=**}    { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_truth/{document=**}    { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_sermon/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_prayer/{document=**}   { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_bible/{document=**}    { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_healing/{document=**}  { allow read: if true; allow write: if isEverydayAdmin(); }
+    match /ewj_books/{document=**}    { allow read: if true; allow write: if isEverydayAdmin(); }
+  }
+}
