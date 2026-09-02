@@ -208,6 +208,9 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 .modal-btn.primary:hover{background:var(--gold-light);}
 .modal-btn.cancel{background:var(--card);color:var(--text-dim);border:1px solid var(--border);}
 .modal-btn.danger{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
+.password-reset-btn{display:block;margin:0 0 12px auto;padding:2px 0;background:none;border:none;color:var(--text-dim);font-size:11px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+.password-reset-btn:hover{color:var(--gold-light);}
+.password-reset-btn:disabled{opacity:.45;cursor:wait;}
 
 /* IMAGE PREVIEW */
 .img-preview-wrap{margin-bottom:10px;}
@@ -392,6 +395,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
     <label>비밀번호</label>
     <input id="loginPw" type="password" autocomplete="current-password"/>
     <div style="font-size:12px;color:#f87171;min-height:18px;margin-bottom:8px" id="loginError"></div>
+    <button type="button" class="password-reset-btn" id="passwordResetBtn" onclick="resetAdminPassword()">비밀번호 재설정</button>
     <div class="modal-btns">
       <button class="modal-btn cancel" onclick="closeLoginModal()">취소</button>
       <button class="modal-btn primary" onclick="doLogin()">로그인</button>
@@ -416,7 +420,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -800,6 +804,28 @@ window.doLogin = async () => {
     showToast('관리자 로그인 완료 ✓');
   } catch(e) {
     document.getElementById('loginError').textContent='이메일 또는 비밀번호가 틀렸습니다';
+  }
+};
+window.resetAdminPassword = async () => {
+  const email=document.getElementById('loginEmail').value.trim();
+  const errorEl=document.getElementById('loginError');
+  const button=document.getElementById('passwordResetBtn');
+  if(!email){
+    errorEl.textContent='관리자 이메일을 먼저 입력해 주세요';
+    document.getElementById('loginEmail').focus();
+    return;
+  }
+  button.disabled=true;
+  errorEl.textContent='';
+  try {
+    await sendPasswordResetEmail(auth,email);
+    closeLoginModal();
+    showToast('비밀번호 재설정 메일을 보냈습니다 ✓');
+  } catch(e) {
+    console.error('비밀번호 재설정 메일 발송 실패',e);
+    errorEl.textContent=e.code==='auth/invalid-email'?'이메일 형식을 확인해 주세요':'메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요';
+  } finally {
+    button.disabled=false;
   }
 };
 document.getElementById('loginPw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
