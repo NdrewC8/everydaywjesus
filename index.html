@@ -228,7 +228,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 
 
 /* FOOTER ADMIN LINK */
-.footer-admin-link{color:var(--text-dim);text-decoration:none;opacity:.5;transition:opacity .2s;}
+.footer-admin-link{color:var(--text-dim);text-decoration:none;opacity:.55;transition:opacity .2s;white-space:nowrap;}
 .footer-admin-link:hover{opacity:1;color:var(--gold);}
 /* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -381,7 +381,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
   <button class="add-btn" onclick="openAdd('truth','link')">＋ 항목 추가</button>
 </section>
 
-<footer class="site-footer"><a href="#" onclick="openLoginModal();return false;" class="footer-admin-link">© <span id="footerYear"></span></a> Everyday with Jesus · everydaywjesus.com</footer>
+<footer class="site-footer">© <span id="footerYear"></span> Everyday with Jesus · everydaywjesus.com · <a href="#" id="adminAccess" onclick="openLoginModal();return false;" class="footer-admin-link" aria-label="관리자 로그인">관리자</a></footer>
 
 <!-- LOGIN MODAL -->
 <div class="modal-bg" id="loginModal">
@@ -808,6 +808,11 @@ function toggleAdmin(on) {
   adminOn=on;
   document.body.classList.toggle('admin-on',on);
   document.querySelectorAll('.admin-bar').forEach(el=>el.classList.toggle('show',on));
+  const adminAccess=document.getElementById('adminAccess');
+  if(adminAccess){
+    adminAccess.textContent=on?'로그아웃':'관리자';
+    adminAccess.setAttribute('aria-label',on?'관리자 로그아웃':'관리자 로그인');
+  }
 }
 
 /* ── EDIT MODAL ── */
