@@ -1,0 +1,694 @@
+{
+  "schemaVersion": 2,
+  "publishedAt": "2026-09-02T09:57:33.322Z",
+  "notices": [
+    {
+      "id": "o6g7lplx6LnyQfjTOian",
+      "title": "매매주 QR코드 입니다",
+      "body": "쉽게 공유 할수있는 QR코드입니다",
+      "date": "2026.06.20",
+      "imageUrls": [
+        "/content/migrated/notice-o6g7lplx6LnyQfjTOian-1.webp"
+      ],
+      "order": 0
+    },
+    {
+      "id": "SUjVJKCxJhVe6hKnGfNM",
+      "title": "저서별설교 업데이트",
+      "body": "저서별설교에 \n\"천국 열쇠를 받은 베드로가 보여준 신앙생활의 로드맵!\"\n가 업데이트 되었습니다.",
+      "date": "2026.06.05",
+      "imageUrls": [
+        "/content/migrated/notice-SUjVJKCxJhVe6hKnGfNM-1.webp"
+      ],
+      "linkUrl": "https://link.coupang.com/a/ekGKGVuKzs",
+      "linkText": "저서구매 바로가기",
+      "order": 1
+    },
+    {
+      "id": "WNeyoD6cuLfCuAkFmEFr",
+      "title": "앱설치 오류시 이렇게 하세요",
+      "body": "다른 브라우저는 문제가 없으나 \n삼성인터넷에서만 아래와 같이 경고 메시지가 \n나옵니다\n그럴경우 크롬으로 접속하시거나\n우측하단에 점3개를 누르시고\n현재페이지추가 -> 홈화면으로 추가하시면 \n문제가 없습니다\n감사합니다",
+      "date": "2026.06.14",
+      "imageUrls": [
+        "/content/migrated/notice-WNeyoD6cuLfCuAkFmEFr-1.webp"
+      ],
+      "order": 2
+    },
+    {
+      "id": "rekC6jwl0xRJpXqOcuZi",
+      "title": "매매주 리뉴얼 오픈",
+      "body": "안녕하세요. 성도여러분\n매매주가 만들어진지 1년이 넘어갑니다.\n그간 매매주 1.0에서 구현하지 못한 부분을 보강하여 이번에 리뉴얼 오픈을 하게되었습니다\n감사합니다",
+      "date": "2025.06.01",
+      "order": 3
+    }
+  ],
+  "resources": [
+    {
+      "id": "VGiZH71yYYgC1l0U5WSg",
+      "section": "bible",
+      "title": "영상으로 보는 드라마바이블(구약)",
+      "subtitle": "YouTube 재생목록",
+      "url": "https://www.youtube.com/playlist?list=PLkwxjHscKmIlrRNkDvp1Yj2vWH4SEpUyO",
+      "label": "구약 통독",
+      "order": 0
+    },
+    {
+      "id": "iN5x8o9ZbVli6y04oqGb",
+      "section": "bible",
+      "title": "영상으로 보는 드라마바이블(신약)",
+      "subtitle": "YouTube 재생목록",
+      "url": "https://www.youtube.com/playlist?list=PLkwxjHscKmIlWy8N59dtWS8WGY-xj_YX9",
+      "label": "신약 통독",
+      "order": 1
+    },
+    {
+      "id": "s1WE9PZYDAwoKNfQfDA1",
+      "section": "bible",
+      "title": "NIV Audio Bible (구약)",
+      "subtitle": "영어로 성경일기",
+      "url": "https://www.youtube.com/playlist?list=PLlUiL8t5_mQiFParVRfjzPSFAEXcn_L7J",
+      "order": 2
+    },
+    {
+      "id": "128JmDq5nVUcWYLw7M5n",
+      "section": "bible",
+      "title": "NIV Audio Bible - (신약)",
+      "subtitle": "영어로 성경읽기",
+      "url": "https://www.youtube.com/playlist?list=PLlUiL8t5_mQj0YntvZtvtppAdvX1SNiVO",
+      "order": 3
+    },
+    {
+      "id": "HcTqSNEREPWK7XvCsZAL",
+      "section": "bible",
+      "title": "슈퍼북",
+      "subtitle": "아이들을 위한 애니메이션 성경",
+      "url": "https://www.youtube.com/playlist?list=PLrTh5VwQP2S7f61s-kjgPXlWP6CWG_k9s",
+      "order": 4
+    },
+    {
+      "id": "w76FsQAwBxQudV6XnvSs",
+      "section": "books",
+      "title": "천국 열쇠를 받은 베드로가 보여준 신앙생활의 로드맵!",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT-Q6dWy6kUXmTd0XVwMx8vW",
+      "thumbnailUrl": "/content/migrated/books-w76FsQAwBxQudV6XnvSs-1.webp",
+      "order": 0
+    },
+    {
+      "id": "YW5Pd7zhwmX3yMMAjLIE",
+      "section": "books",
+      "title": "죽기 전에 꼭 알아야 할 세 가지!",
+      "subtitle": "26.01.04~26.02.24",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT_utHxmT8WoAfaPShm7Jeby",
+      "thumbnailUrl": "/content/migrated/books-YW5Pd7zhwmX3yMMAjLIE-1.webp",
+      "order": 1
+    },
+    {
+      "id": "PLTqo4oIT7HQcxGZec4U",
+      "section": "books",
+      "title": "40년 만에 완성된 인생설교 그리스도의 율법",
+      "subtitle": "25.07.20~25.09.28",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT99laV2LrhfCpj9cNquRX0f",
+      "thumbnailUrl": "/content/migrated/books-PLTqo4oIT7HQcxGZec4U-1.webp",
+      "order": 2
+    },
+    {
+      "id": "QT7LsAW6bdIgREQXOAOd",
+      "section": "books",
+      "title": "위험한 신앙과 안전한 신앙!",
+      "subtitle": "25.03.16~25.03.30",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT9JLZv4KjqgqyaxVKVmWB9z",
+      "thumbnailUrl": "/content/migrated/books-QT7LsAW6bdIgREQXOAOd-1.webp",
+      "order": 3
+    },
+    {
+      "id": "UWnmnFX77eb27gyqqKPM",
+      "section": "books",
+      "title": "천국에 가야 풀릴 줄 알았던 삼위일체의 신비!",
+      "subtitle": "25.01.05~25.07.06",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT-B5u6sv0ZrrMUgqRuMQDuL",
+      "thumbnailUrl": "/content/migrated/books-UWnmnFX77eb27gyqqKPM-1.webp",
+      "order": 4
+    },
+    {
+      "id": "u7BbokY9y8gk5p10pLo9",
+      "section": "books",
+      "title": "원 샷~ 올 킬!",
+      "subtitle": "24.11.10~24.12.29",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT8FdwTL07kaKCtZpUU0G44y",
+      "thumbnailUrl": "/content/migrated/books-u7BbokY9y8gk5p10pLo9-1.webp",
+      "order": 5
+    },
+    {
+      "id": "fi50DjYg9rMVwXhf1Y0Z",
+      "section": "books",
+      "title": "죄를 이기는 비결: 하늘에서 내려온 동아줄!",
+      "subtitle": "24.10.06~24.09.08",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT8O_aDmzV7ioRkiWxCHiWci",
+      "thumbnailUrl": "/content/migrated/books-fi50DjYg9rMVwXhf1Y0Z-1.webp",
+      "order": 6
+    },
+    {
+      "id": "Q8r3zTwbhFvmvfmI3qwa",
+      "section": "books",
+      "title": "성령이 일으켜 주시는 달콤한 소원!",
+      "subtitle": "25.12.21",
+      "url": "https://www.youtube.com/playlist?list=PL6wak1b9aRF-AwROPG98yYUy8gwVTMa9a",
+      "thumbnailUrl": "/content/migrated/books-Q8r3zTwbhFvmvfmI3qwa-1.webp",
+      "order": 7
+    },
+    {
+      "id": "2OaNVpulb7Q2F87c74Hd",
+      "section": "healing",
+      "title": "질병명으로 간증 찾아보기",
+      "subtitle": "YouTube 채널",
+      "url": "https://www.youtube.com/@healing_n_testimony",
+      "label": "간증 채널",
+      "order": 0
+    },
+    {
+      "id": "eJjeZK4FHTnNHGsg6JNe",
+      "section": "healing",
+      "title": "사사모설교",
+      "subtitle": "사랑하는사람들의 모임 설교",
+      "url": "https://youtube.com/playlist?list=PLNFQy-3DVkT-AA4cMi08zJ5qBN3NZ1o0F&si=98eta_N4rjiEa7ob",
+      "order": 1
+    },
+    {
+      "id": "XtFLSUP0qR1x8xThZAxp",
+      "section": "healing",
+      "title": "치유 간증 쇼츠 모음",
+      "subtitle": "YouTube 재생목록",
+      "url": "https://youtube.com/playlist?list=PLNFQy-3DVkT9_Q6XJyDz7w4fXV9O-z98-",
+      "label": "치유 쇼츠",
+      "order": 2
+    },
+    {
+      "id": "1lDHE61UDX9XEwd9HEzA",
+      "section": "healing",
+      "title": "치유대성회 풀영상",
+      "subtitle": "치유대성회 전체 영상입니다.",
+      "url": "https://www.youtube.com/playlist?list=PL6wak1b9aRF9TesgYuInDMj76HtXSMLDI",
+      "order": 3
+    },
+    {
+      "id": "kqvYVCKh5IV72ab3u9mX",
+      "section": "healing",
+      "title": "치유선포",
+      "subtitle": "치유선포 영상입니다.",
+      "url": "https://www.youtube.com/playlist?list=PL6wak1b9aRF_Iat0QIanVz_9woAU8fKIY",
+      "order": 4
+    },
+    {
+      "id": "Bh1sYvYllGoAhaHIeO5G",
+      "section": "links",
+      "title": "사랑하는교회 홈페이지",
+      "subtitle": "www.belovedc.com",
+      "url": "https://www.belovedc.com/",
+      "thumbnailUrl": "/content/migrated/links-Bh1sYvYllGoAhaHIeO5G-1.webp",
+      "label": "공식 홈페이지",
+      "order": 0
+    },
+    {
+      "id": "CNp1uWydknv4lqfrToTg",
+      "section": "links",
+      "title": "사랑하는교회 다음카페",
+      "subtitle": "cafe.daum.net/Bigchurch",
+      "url": "https://cafe.daum.net/Bigchurch",
+      "thumbnailUrl": "/content/migrated/links-CNp1uWydknv4lqfrToTg-1.webp",
+      "label": "다음 카페",
+      "order": 1
+    },
+    {
+      "id": "JhtKtDz4iHIoXWA2dtV3",
+      "section": "links",
+      "title": "사랑하는교회 유튜브",
+      "subtitle": "사랑하는교회 공식 유튜브채널",
+      "url": "https://www.youtube.com/@belovedch",
+      "thumbnailUrl": "/content/migrated/links-JhtKtDz4iHIoXWA2dtV3-1.webp",
+      "label": "유튜브",
+      "order": 2
+    },
+    {
+      "id": "Nue8QyD13HGYVt9RnUAc",
+      "section": "links",
+      "title": "인스타그램",
+      "url": "https://www.instagram.com/belovedchurch_official?igsh=dXZraWxsM2Vuanlz",
+      "thumbnailUrl": "/content/migrated/links-Nue8QyD13HGYVt9RnUAc-1.webp",
+      "order": 3
+    },
+    {
+      "id": "VN4d8gcZ8704OD40GhsR",
+      "section": "links",
+      "title": "천국의 도서관",
+      "url": "https://m.gfcbook.com/",
+      "thumbnailUrl": "/content/migrated/links-VN4d8gcZ8704OD40GhsR-1.webp",
+      "order": 4
+    },
+    {
+      "id": "E0Bt8s9ubtbQls8rv1dM",
+      "section": "links",
+      "title": "사랑하는교회 유초등부",
+      "url": "https://m.youtube.com/@gfcchild",
+      "thumbnailUrl": "/content/migrated/links-E0Bt8s9ubtbQls8rv1dM-1.webp",
+      "order": 5
+    },
+    {
+      "id": "OJN0Gk09flcA5FsqESzJ",
+      "section": "links",
+      "title": "MP3 자료실",
+      "subtitle": "설교를 MP3로 다운받을 수 있는 사이트입니다.",
+      "url": "https://holyvirus1225.wixsite.com/belovedc",
+      "thumbnailUrl": "/content/migrated/links-OJN0Gk09flcA5FsqESzJ-1.webp",
+      "label": "MP3 자료실",
+      "order": 6
+    },
+    {
+      "id": "16lwGEj3eIRIMiJYeM4L",
+      "section": "links",
+      "title": "사랑하는 교회 블로그",
+      "url": "https://m.blog.naver.com/belovedc",
+      "thumbnailUrl": "/content/migrated/links-16lwGEj3eIRIMiJYeM4L-1.webp",
+      "order": 7
+    },
+    {
+      "id": "GFG5NLMqf8JQ1R8qZbSb",
+      "section": "praise",
+      "title": "주일 찬양",
+      "subtitle": "주일찬양 모음",
+      "url": "https://www.youtube.com/playlist?list=PLs-cSqzK9QvUCVWP5B8o4kX62Ze6YhAYx",
+      "label": "주일 찬양",
+      "order": 0
+    },
+    {
+      "id": "4zYztCAiTs0n1C0Ked3f",
+      "section": "praise",
+      "title": "빠른찬양",
+      "subtitle": "신나계 찬양을 하고싶을 때",
+      "url": "https://youtube.com/playlist?list=PLs-cSqzK9QvXVAkO7aUlYQ5wISymVjuwl",
+      "order": 1
+    },
+    {
+      "id": "TVZkCElIsMB9m6in8iwr",
+      "section": "praise",
+      "title": "느린찬양",
+      "subtitle": "잔잔히 임제에 들어가고 싶을 때",
+      "url": "https://www.youtube.com/playlist?list=PLs-cSqzK9QvXl9JF1tLADeOA83ZzK-SM9",
+      "order": 2
+    },
+    {
+      "id": "5BzmyjVuWj3pT7QiKvFA",
+      "section": "praise",
+      "title": "경음악으로 만나는 찬양",
+      "url": "https://www.youtube.com/playlist?list=PLhBqzadR_1nFkdYbKYqmxcM10QOgwhoFL",
+      "order": 3
+    },
+    {
+      "id": "pjsyTDugXLceluzpK4gW",
+      "section": "prayer",
+      "title": "특별기도회 (2026년)",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT8sUv90QvTTBa19ofwQYFvd",
+      "order": 0
+    },
+    {
+      "id": "G66711a5o3Yw7p9zngey",
+      "section": "prayer",
+      "title": "매일기도",
+      "subtitle": "기도가 힘들때 듣는 기도",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT-CsYiuJi_roaTSGO6ds4y1",
+      "label": "매일기도록 하루를 시작해요.",
+      "order": 1
+    },
+    {
+      "id": "rIGxe86yLdCwAxYsDPQg",
+      "section": "prayer",
+      "title": "기도할때 듣는 찬양",
+      "url": "https://youtube.com/playlist?list=PLkwxjHscKmIlCRcXpqmussbtEIbYDNaiL",
+      "label": "기도 찬양",
+      "order": 2
+    },
+    {
+      "id": "CoskxubI5AfYVuvgUL1f",
+      "section": "sermon",
+      "title": "주일 설교",
+      "subtitle": "성경 그대로의 진리를 전하는 설교",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT-pLw--AlUvp5NaoKXZOdCY",
+      "label": "주일 설교",
+      "order": 0
+    },
+    {
+      "id": "0pG0JgZWkuvi9fbzbzt2",
+      "section": "sermon",
+      "title": "제2 예배 설교",
+      "subtitle": "초신자를 위한 설교",
+      "url": "https://www.youtube.com/playlist?list=PLNFQy-3DVkT-GAJB4pThbaunkEyjtbmZA",
+      "order": 1
+    },
+    {
+      "id": "vnsbfpFjpbxg2k2PrgTC",
+      "section": "sermon",
+      "title": "특종에 올라온 설교",
+      "subtitle": "YouTube 재생목록",
+      "url": "https://youtube.com/playlist?list=PLNFQy-3DVkT-Or9q5HihEwpOdiQRqUz8B",
+      "label": "특종 설교",
+      "order": 2
+    },
+    {
+      "id": "RQrsgII8AU9zuN9n9t7a",
+      "section": "sermon",
+      "title": "청년부설교",
+      "subtitle": "청년부설교 모음입니다.",
+      "url": "https://www.youtube.com/playlist?list=PL6wak1b9aRF81V_tgNRK9OpqHGYGrQXpQ",
+      "order": 3
+    },
+    {
+      "id": "Tn1Y9piXpq9kVeyx1bHA",
+      "section": "sermon",
+      "title": "학생부 설교",
+      "subtitle": "학생부설교 모음입니다.",
+      "url": "https://www.youtube.com/playlist?list=PL6wak1b9aRF84yucCDzY-MVnbK8BYWwXQ",
+      "order": 4
+    },
+    {
+      "id": "wRn2Disl5THAM3NWiPI5",
+      "section": "truth",
+      "title": "듣는 귀가 필요한 분께",
+      "subtitle": "YouTube 재생목록",
+      "url": "https://www.youtube.com/playlist?list=PL6wak1b9aRF-3vwG7h05zmHOL4xLmI2aL",
+      "label": "진실의 방",
+      "order": 0
+    }
+  ],
+  "churches": [
+    {
+      "id": "church-1",
+      "name": "강릉 사랑하는교회",
+      "region": "강원",
+      "address": "강원 강릉시 율곡로 2745 3층 · 건물 뒤편 주차장 이용 가능",
+      "phone": "033-644-3079",
+      "url": "https://naver.me/G9ppxWBX",
+      "order": 0
+    },
+    {
+      "id": "church-2",
+      "name": "경주 사랑하는교회",
+      "region": "경북",
+      "address": "경북 경주시 양정로 269 금학빌딩 3층",
+      "phone": "054-773-3079",
+      "url": "https://naver.me/xdMfWVdr",
+      "order": 1
+    },
+    {
+      "id": "church-3",
+      "name": "광주 사랑하는교회",
+      "region": "광주",
+      "address": "광주 북구 신임로32번길 35 2층",
+      "phone": "0507-1339-3079",
+      "url": "https://naver.me/xa5SbndH",
+      "order": 2
+    },
+    {
+      "id": "church-4",
+      "name": "구미 사랑하는교회",
+      "region": "경북",
+      "address": "경북 구미시 인동26길 28 3층",
+      "phone": "0507-1340-3079",
+      "url": "https://naver.me/IDkoq1L3",
+      "order": 3
+    },
+    {
+      "id": "church-5",
+      "name": "남양주 사랑하는교회",
+      "region": "경기",
+      "address": "경기 남양주시 미금로 180 2층 · 중앙선 도농역 1번출구 도보 15분",
+      "phone": "0507-1357-3079",
+      "url": "https://naver.me/GA88zh3D",
+      "order": 4
+    },
+    {
+      "id": "church-6",
+      "name": "대구 사랑하는교회",
+      "region": "대구",
+      "address": "대구 동구 메디밸리로 5-25 대림빌딩 4층",
+      "phone": "053-961-3079",
+      "url": "https://naver.me/xAF8Uc1I",
+      "order": 5
+    },
+    {
+      "id": "church-7",
+      "name": "대전 사랑하는교회",
+      "region": "대전",
+      "address": "대전 동구 대전로 742 5층",
+      "phone": "0507-1336-3079",
+      "url": "https://naver.me/FINN24LV",
+      "order": 6
+    },
+    {
+      "id": "church-8",
+      "name": "목포 사랑하는교회",
+      "region": "전남",
+      "address": "전남 목포시 비파로 31 인암빌딩 4층 · 목포 신협 본점 옆 건물",
+      "phone": "061-282-3079",
+      "url": "https://naver.me/x9Bk0MYy",
+      "order": 7
+    },
+    {
+      "id": "church-9",
+      "name": "부산 사랑하는교회",
+      "region": "부산",
+      "address": "부산 수영구 장대골로 35",
+      "phone": "051-505-3093",
+      "url": "https://naver.me/5OQ2nvIc",
+      "order": 8
+    },
+    {
+      "id": "church-10",
+      "name": "부천 사랑하는교회",
+      "region": "경기",
+      "address": "경기 부천시 원미구 부흥로303번길 50",
+      "phone": "0507-1333-3079",
+      "url": "https://naver.me/xhz5egSL",
+      "order": 9
+    },
+    {
+      "id": "church-11",
+      "name": "서울 사랑하는교회",
+      "region": "서울",
+      "address": "서울 송파구 위례성대로22길 27-22",
+      "phone": "02-586-3079",
+      "url": "https://www.belovedc.com/",
+      "order": 10
+    },
+    {
+      "id": "church-12",
+      "name": "수원 사랑하는교회",
+      "region": "경기",
+      "address": "경기 수원시 장안구 송원로 39 월드타워 6층",
+      "phone": "031-258-3079",
+      "url": "https://naver.me/F1rVY445",
+      "order": 11
+    },
+    {
+      "id": "church-13",
+      "name": "순천 사랑하는교회",
+      "region": "전남",
+      "address": "전남 순천시 유동1길 29-10",
+      "phone": "061-722-3079",
+      "url": "https://naver.me/xaff4a4E",
+      "order": 12
+    },
+    {
+      "id": "church-14",
+      "name": "안동 사랑하는교회",
+      "region": "경북",
+      "address": "경북 안동시 은행나무로 103 2층",
+      "phone": "0507-1337-3079",
+      "url": "https://naver.me/GO6zM6hS",
+      "order": 13
+    },
+    {
+      "id": "church-15",
+      "name": "안산 사랑하는교회",
+      "region": "경기",
+      "address": "경기 안산시 상록구 광덕산2로 4 3층",
+      "phone": "031-414-3079",
+      "url": "https://naver.me/GCgfqOMs",
+      "order": 14
+    },
+    {
+      "id": "church-16",
+      "name": "안양 사랑하는교회",
+      "region": "경기",
+      "address": "경기 안양시 만안구 안양로329번길 108 2층",
+      "phone": "0507-1328-3072",
+      "url": "https://naver.me/5r9WLudg",
+      "order": 15
+    },
+    {
+      "id": "church-17",
+      "name": "양산 사랑하는교회",
+      "region": "경남",
+      "address": "경남 양산시 양산역로 103 6층",
+      "phone": "055-383-3079",
+      "url": "https://naver.me/FgTTp9fB",
+      "order": 16
+    },
+    {
+      "id": "church-18",
+      "name": "용인 사랑하는교회",
+      "region": "경기",
+      "address": "경기 용인시 처인구 금령로 135",
+      "phone": "0507-1345-3079",
+      "url": "https://naver.me/GgWnPMIY",
+      "order": 17
+    },
+    {
+      "id": "church-19",
+      "name": "울산 사랑하는교회",
+      "region": "울산",
+      "address": "울산 중구 함월16길 69",
+      "phone": "052-287-3079",
+      "url": "https://naver.me/xXwCX12s",
+      "order": 18
+    },
+    {
+      "id": "church-20",
+      "name": "의정부 사랑하는교회",
+      "region": "경기",
+      "address": "경기 의정부시 능곡로 13 추동아파트상가 2층",
+      "phone": "0507-1344-3079",
+      "url": "https://naver.me/FCrLkAYf",
+      "order": 19
+    },
+    {
+      "id": "church-21",
+      "name": "익산 사랑하는교회",
+      "region": "전북",
+      "address": "전북 익산시 부송로 103 사파이어빌딩 5층",
+      "phone": "063-833-3079",
+      "url": "https://naver.me/GYDcF9GZ",
+      "order": 20
+    },
+    {
+      "id": "church-22",
+      "name": "인천 사랑하는교회",
+      "region": "인천",
+      "address": "인천 남동구 남동대로733번길 17",
+      "phone": "0507-1316-1925",
+      "url": "https://naver.me/Fdq7Ut4w",
+      "order": 21
+    },
+    {
+      "id": "church-23",
+      "name": "일산 사랑하는교회",
+      "region": "경기",
+      "address": "경기 고양시 일산서구 중앙로 1471 대우레시티상가 2층",
+      "phone": "031-906-3079",
+      "url": "https://naver.me/x1VHzEc6",
+      "order": 22
+    },
+    {
+      "id": "church-24",
+      "name": "전주 사랑하는교회",
+      "region": "전북",
+      "address": "전북 전주시 덕진구 백제대로 820",
+      "phone": "0507-1341-3079",
+      "url": "https://naver.me/x7jtjm63",
+      "order": 23
+    },
+    {
+      "id": "church-25",
+      "name": "제주 사랑하는교회",
+      "region": "제주",
+      "address": "제주 제주시 과원북4길 5 4층",
+      "phone": "0507-1401-3079",
+      "url": "https://naver.me/GlJAK3gg",
+      "order": 24
+    },
+    {
+      "id": "church-26",
+      "name": "제천 사랑하는교회",
+      "region": "충북",
+      "address": "충북 제천시 용두대로 119 2층",
+      "phone": "043-643-3079",
+      "url": "https://naver.me/GUTt5dku",
+      "order": 25
+    },
+    {
+      "id": "church-27",
+      "name": "창원 사랑하는교회",
+      "region": "경남",
+      "address": "경남 창원시 성산구 용지로169번길 13 10층",
+      "phone": "0507-1334-3079",
+      "url": "https://naver.me/5JGPDVhk",
+      "order": 26
+    },
+    {
+      "id": "church-28",
+      "name": "천안 사랑하는교회",
+      "region": "충남",
+      "address": "충남 천안시 동남구 신촌4로 25 3층",
+      "phone": "0507-1368-3079",
+      "url": "https://naver.me/FMTsE3ac",
+      "order": 27
+    },
+    {
+      "id": "church-29",
+      "name": "청주 사랑하는교회",
+      "region": "충북",
+      "address": "충북 청주시 흥덕구 2순환로1167번길 4 호인리더스빌딩 7층",
+      "phone": "0507-1347-3079",
+      "url": "https://naver.me/FkLW2WxZ",
+      "order": 28
+    },
+    {
+      "id": "church-30",
+      "name": "춘천 사랑하는교회",
+      "region": "강원",
+      "address": "강원 춘천시 금강로 106 운교프라자 4층",
+      "phone": "0507-1349-3079",
+      "url": "https://naver.me/G1wfyNR6",
+      "order": 29
+    },
+    {
+      "id": "church-31",
+      "name": "통영 사랑하는교회",
+      "region": "경남",
+      "address": "경남 통영시 광도면 죽림2로 49-31 동진빌딩 6층",
+      "phone": "0507-1352-3079",
+      "url": "https://naver.me/GvWd5IKz",
+      "order": 30
+    },
+    {
+      "id": "church-32",
+      "name": "평택 사랑하는교회",
+      "region": "경기",
+      "address": "경기 평택시 평택로 180",
+      "phone": "031-654-3079",
+      "url": "https://naver.me/GFBxnAjz",
+      "order": 31
+    },
+    {
+      "id": "church-33",
+      "name": "포항 사랑하는교회",
+      "region": "경북",
+      "address": "경북 포항시 북구 장량로 254",
+      "phone": "054-244-3079",
+      "url": "https://naver.me/59UeOlpX",
+      "order": 32
+    },
+    {
+      "id": "church-34",
+      "name": "화성 사랑하는교회",
+      "region": "경기",
+      "address": "경기 화성시 향남읍 평3길 19 6층 · 향남역 1번 출구 도보 8분",
+      "phone": "0507-1464-0768",
+      "url": "https://naver.me/5CW6SZGL",
+      "order": 33
+    }
+  ],
+  "settings": {
+    "siteName": "매일 예수님과 함께",
+    "supportUrl": "https://influencers.coupang.com/s/kingofsallim",
+    "inquiryUrl": "https://open.kakao.com/o/sbqrs0jh"
+  }
+}

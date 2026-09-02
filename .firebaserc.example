@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "everydaywjesus-staging",
+    "staging": "everydaywjesus-staging",
+    "production": "everydaywjesus-prod"
+  }
+}

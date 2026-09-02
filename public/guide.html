@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>매매주 사용설명서</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #F472B6;
+  --pink-light: #FBCFE8;
+  --pink-dim: rgba(244,114,182,0.12);
+  --deep: #1A0A14;
+  --dark: #240F1C;
+  --card: #2E1525;
+  --card2: #3A1B30;
+  --text: #FDF2F8;
+  --text-dim: #C084A8;
+  --border: rgba(244,114,182,0.2);
+  --radius: 16px;
+  --gold: #C9A84C;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--deep);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* BG */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(244,114,182,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(201,168,76,.05) 0%, transparent 60%);
+  pointer-events:none; z-index:0;
+}
+
+/* HEADER */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 56px 24px 48px;
+  z-index: 1;
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--pink-dim);
+  border: 1px solid rgba(244,114,182,.3);
+  color: var(--pink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.hero-logo {
+  width: 80px; height: 80px;
+  border-radius: 22px;
+  margin: 0 auto 16px;
+  display: block;
+  box-shadow: 0 8px 32px rgba(244,114,182,.3);
+}
+.hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(26px, 6vw, 38px);
+  font-weight: 700;
+  color: var(--pink-light);
+  margin-bottom: 8px;
+}
+.hero-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* CONTENT */
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 36px;
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-num {
+  width: 28px; height: 28px;
+  background: var(--pink);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pink-light);
+}
+
+/* CARD */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.card:hover { border-color: rgba(244,114,182,.4); }
+
+/* BUTTON ITEM */
+.btn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+}
+.btn-icon {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--pink-dim);
+  border: 1px solid rgba(244,114,182,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.btn-icon.white {
+  background: #fff;
+  border-color: rgba(255,255,255,.2);
+}
+.btn-icon.gold {
+  background: rgba(201,168,76,.15);
+  border-color: rgba(201,168,76,.3);
+}
+.btn-icon.kakao { background: #FEE500; }
+.btn-icon.purple { background: linear-gradient(135deg,#6B21A8,#9333EA); }
+.btn-text { flex: 1; }
+.btn-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.btn-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* MENU GRID */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.menu-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  transition: border-color .2s;
+}
+.menu-card:hover { border-color: rgba(244,114,182,.4); }
+.menu-icon { font-size: 26px; margin-bottom: 8px; }
+.menu-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pink-light);
+  margin-bottom: 5px;
+}
+.menu-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.menu-sub {
+  font-size: 10px;
+  color: var(--pink);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+/* TIP BOX */
+.tip-box {
+  background: rgba(201,168,76,.06);
+  border: 1px solid rgba(201,168,76,.2);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+.tip-box strong { color: var(--gold); }
+
+/* STEP */
+.step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 26px; height: 26px;
+  background: var(--pink-dim);
+  border: 1px solid rgba(244,114,182,.3);
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-text {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.8;
+  flex: 1;
+}
+.step-text strong { color: var(--text); }
+
+/* FOOTER */
+.guide-footer {
+  text-align: center;
+  padding: 28px 20px 40px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+}
+.guide-footer a {
+  color: var(--pink);
+  text-decoration: none;
+}
+
+/* NAV */
+.toc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 32px;
+}
+.toc-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toc-list a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color .2s;
+}
+.toc-list a:hover { color: var(--pink); }
+.toc-list a::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--pink);
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: .5;
+}
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.content > * { animation: fadeIn .5s ease both; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">사용 설명서</div>
+  <img src="logo.png" alt="매매주 로고" class="hero-logo"/>
+  <h1 class="hero-title">매매주 사용설명서</h1>
+  <p class="hero-sub">매일 매일을 주님께 · 사랑하는교회<br>앱의 모든 기능과 메뉴를 안내합니다</p>
+</div>
+
+<div class="content">
+
+
+  <!-- 실제 화면 미리보기 -->
+  <div style="text-align:center;margin-bottom:28px">
+    <div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">실제 화면</div>
+    <img src="/guide-assets/guide-1.webp" alt="매매주 실제 화면" style="width:100%;max-width:320px;border-radius:20px;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.4)"/>
+  </div>
+
+  <!-- 접속 주소 안내 배너 -->
+  <div style="background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(201,168,76,.08));border:1px solid rgba(244,114,182,.3);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px;text-align:center">
+    <div style="font-size:11px;font-weight:700;color:var(--pink);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">📌 접속 주소 안내</div>
+    <div style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:10px">
+      2025년 6월 1일부터 새 주소로 접속하세요
+    </div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;display:inline-block;font-size:15px;font-weight:700;color:var(--pink-light);letter-spacing:.02em">
+      🌐 www.everydaywjesus.com
+    </div>
+  </div>
+
+  <!-- 목차 -->
+  <div class="toc">
+    <div class="toc-title">목차</div>
+    <ul class="toc-list">
+      <li><a href="#header">상단 버튼 안내</a></li>
+      <li><a href="#nav">탭 메뉴 구성</a></li>
+      <li><a href="#notice">공지 탭</a></li>
+      <li><a href="#content">콘텐츠 탭 (기도·찬양·성경·설교·저서·치유·진실의 방)</a></li>
+      <li><a href="#links">바로가기 탭</a></li>
+      <li><a href="#branch">지교회 탭</a></li>
+      <li><a href="#admin">관리자 기능</a></li>
+      <li><a href="#install">앱 설치 방법</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. 상단 버튼 -->
+  <div class="section" id="header">
+    <div class="section-label">
+      <div class="section-num">1</div>
+      <div class="section-title">상단 버튼 안내</div>
+    </div>
+
+    <div class="btn-item">
+      <div class="btn-icon" style="background:#fff;padding:0;overflow:hidden">
+        <img src="/guide-assets/guide-2.webp" alt="매매주 로고" style="width:46px;height:46px;object-fit:cover;border-radius:12px"/>
+      </div>
+      <div class="btn-text">
+        <div class="btn-name">앱 설치 (좌측 로고)</div>
+        <div class="btn-desc">
+          로고를 누르면 스마트폰 홈 화면에 매매주 앱을 설치할 수 있습니다.<br>
+          • <strong>안드로이드</strong>: 설치 팝업이 자동으로 나타납니다<br>
+          • <strong>아이폰(iOS)</strong>: Safari 하단 공유 버튼 → "홈 화면에 추가"를 눌러 설치하세요
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-item">
+      <div class="btn-icon gold" style="background:transparent;border:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <div class="btn-name">공유하기 (우측 버튼)</div>
+        <div class="btn-desc">
+          매매주 링크를 카카오톡, 문자, 인스타그램 등으로 공유합니다.<br>
+          공유 메시지: <em style="color:var(--pink-light)">"-매일 매일을 주님께- 매일 경건생활에 필요한 기도, 찬양, 성경, 설교를 한 곳에 모았습니다. 🙏"</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 앱 설치 팁</strong><br>
+      홈 화면에 설치하면 앱처럼 전체화면으로 실행되고,
+      매번 브라우저를 열지 않아도 바로 접속할 수 있습니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2. 탭 이동 -->
+  <div class="section" id="nav">
+    <div class="section-label">
+      <div class="section-num">2</div>
+      <div class="section-title">탭 메뉴 이동 방법</div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;color:var(--text-dim);line-height:1.9">
+        상단 탭바에서 원하는 메뉴를 <strong style="color:var(--text)">탭(터치)</strong>하거나,<br>
+        화면을 <strong style="color:var(--text)">좌우로 스와이프</strong>하면 탭 간 이동이 됩니다.<br><br>
+        탭 목록이 많아 한 번에 안 보일 경우, 탭바를 <strong style="color:var(--text)">좌우로 드래그</strong>해서 숨겨진 탭을 찾을 수 있습니다.
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--pink)">📢 공지</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">🙏 기도</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">🎵 찬양</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">📖 성경</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">🎤 설교</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">📗 저서별설교</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">🕊️ 치유</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">🔗 바로가기</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">⛪ 지교회</span>
+      <span style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-dim)">✝ 진실의 방</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3. 공지 -->
+  <div class="section" id="notice">
+    <div class="section-label">
+      <div class="section-num">3</div>
+      <div class="section-title">📢 공지 탭</div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;color:var(--text-dim);line-height:1.9;margin-bottom:14px">
+        사랑하는교회와 매매주의 최신 소식을 확인할 수 있습니다.<br>
+        최신 공지가 <strong style="color:var(--text)">맨 위</strong>에 표시됩니다.
+      </div>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-text"><strong>제목 터치</strong> → 상세 내용과 이미지가 펼쳐집니다</div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-text">다시 터치하면 <strong>접힙니다</strong></div>
+      </div>
+    </div>
+
+    <div class="btn-item">
+      <div class="btn-icon kakao">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#3A1D1D">
+          <path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.688 1.627 5.04 4.09 6.385L5.1 20.4a.5.5 0 0 0 .72.548l4.54-2.63c.54.082 1.09.132 1.64.132 5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <div class="btn-name">카톡으로 문의하기</div>
+        <div class="btn-desc">공지 하단의 노란 버튼을 누르면 교회 카카오톡 채널로 문의할 수 있습니다.</div>
+      </div>
+    </div>
+
+    <div class="btn-item">
+      <div class="btn-icon purple" style="font-size:24px">🌍</div>
+      <div class="btn-text">
+        <div class="btn-name">아프리카 선교 후원</div>
+        <div class="btn-desc">아프리카 선교를 위한 후원 페이지로 이동합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. 콘텐츠 탭 -->
+  <div class="section" id="content">
+    <div class="section-label">
+      <div class="section-num">4</div>
+      <div class="section-title">콘텐츠 탭 메뉴 구성</div>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-icon">🙏</div>
+        <div class="menu-name">기도</div>
+        <div class="menu-desc">매일 기도 플레이리스트와 기도할 때 듣는 찬양을 모았습니다</div>
+        <div class="menu-sub">YouTube 재생목록</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-icon">🎵</div>
+        <div class="menu-name">찬양과 경배</div>
+        <div class="menu-desc">주일 찬양 등 예배와 경건 시간에 함께하는 찬양 모음</div>
+        <div class="menu-sub">YouTube 재생목록</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-icon">📖</div>
+        <div class="menu-name">성경</div>
+        <div class="menu-desc">구약·신약 성경 통독 영상. 매일 꾸준히 말씀을 읽을 수 있습니다</div>
+        <div class="menu-sub">구약 / 신약 통독</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-icon">🎤</div>
+        <div class="menu-name">설교</div>
+        <div class="menu-desc">주일설교·제2예배·사사모·특종설교 재생목록을 한 곳에서</div>
+        <div class="menu-sub">다양한 설교 모음</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-icon">📗</div>
+        <div class="menu-name">저서별 설교</div>
+        <div class="menu-desc">저서와 연계된 설교 영상. 쿠팡 저서 구매 버튼도 함께 제공</div>
+        <div class="menu-sub">저서 구매 바로가기 포함</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-icon">🕊️</div>
+        <div class="menu-name">치유</div>
+        <div class="menu-desc">치유 간증 쇼츠와 질병명으로 간증을 찾을 수 있는 채널</div>
+        <div class="menu-sub">치유 간증 / 채널 안내</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-icon">✝️</div>
+        <div class="menu-name">진실의 방</div>
+        <div class="menu-desc">듣는 귀가 필요한 분들을 위한 특별 말씀 모음</div>
+        <div class="menu-sub">진리의 말씀</div>
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top:14px">
+      <strong>▶ 영상 보는 방법</strong><br>
+      썸네일을 터치하면 앱 안에서 바로 재생됩니다.<br>
+      하단의 <em style="color:var(--pink-light)">YouTube에서 보기</em> 버튼을 누르면 YouTube 앱이나 브라우저로 이동합니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5. 바로가기 -->
+  <div class="section" id="links">
+    <div class="section-label">
+      <div class="section-num">5</div>
+      <div class="section-title">🔗 바로가기 탭</div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;color:var(--text-dim);line-height:1.9">
+        사랑하는교회의 주요 채널로 빠르게 이동할 수 있습니다.
+      </div>
+    </div>
+
+    <div class="btn-item">
+      <div class="btn-icon">🏠</div>
+      <div class="btn-text">
+        <div class="btn-name">사랑하는교회 홈페이지</div>
+        <div class="btn-desc">www.belovedc.com — 교회 공식 홈페이지</div>
+      </div>
+    </div>
+    <div class="btn-item">
+      <div class="btn-icon">☕</div>
+      <div class="btn-text">
+        <div class="btn-name">사랑하는교회 다음카페</div>
+        <div class="btn-desc">성도 커뮤니티 공간</div>
+      </div>
+    </div>
+    <div class="btn-item">
+      <div class="btn-icon">📺</div>
+      <div class="btn-text">
+        <div class="btn-name">사랑하는교회 유튜브</div>
+        <div class="btn-desc">@belovedch — 공식 YouTube 채널 구독</div>
+      </div>
+    </div>
+    <div class="btn-item">
+      <div class="btn-icon">🎧</div>
+      <div class="btn-text">
+        <div class="btn-name">MP3 자료실</div>
+        <div class="btn-desc">설교·찬양 MP3 파일을 다운로드할 수 있는 자료실</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 6. 지교회 -->
+  <div class="section" id="branch">
+    <div class="section-label">
+      <div class="section-num">6</div>
+      <div class="section-title">⛪ 지교회 탭</div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;color:var(--text-dim);line-height:1.9">
+        전국 <strong style="color:var(--text)">34개</strong> 사랑하는교회 지교회 정보를 확인할 수 있습니다.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">①</div>
+      <div class="step-text">상단 검색창에 <strong>지역명 또는 주소</strong>를 입력하면 실시간으로 검색됩니다</div>
+    </div>
+    <div class="step">
+      <div class="step-num">②</div>
+      <div class="step-text"><strong>📞 전화번호</strong> 버튼을 누르면 바로 전화 연결됩니다</div>
+    </div>
+    <div class="step">
+      <div class="step-num">③</div>
+      <div class="step-text"><strong>🗺 지도 보기</strong> 버튼을 누르면 네이버 지도로 위치를 확인합니다</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 7. 관리자 -->
+  <div class="section" id="admin">
+    <div class="section-label">
+      <div class="section-num">7</div>
+      <div class="section-title">관리자 기능</div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;color:var(--text-dim);line-height:1.9;margin-bottom:12px">
+        페이지 하단의 <strong style="color:var(--text)">© 2025</strong>를 누르면 관리자 로그인 화면이 나타납니다.
+      </div>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-text">이메일과 비밀번호 입력 후 <strong>로그인</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-text">각 탭에 <strong>✏ 수정</strong> / <strong>＋ 항목 추가</strong> 버튼이 나타납니다</div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-text">카드 좌측 <strong>▲▼ 버튼</strong>으로 항목 순서를 변경할 수 있습니다</div>
+      </div>
+      <div class="step">
+        <div class="step-num">④</div>
+        <div class="step-text">로그아웃은 다시 <strong>© 2025</strong>를 누르면 됩니다</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>⚙ 관리자가 할 수 있는 것</strong><br>
+      • 공지사항 추가 · 수정 · 삭제 (이미지 첨부 가능)<br>
+      • 각 탭의 YouTube 플레이리스트 추가 · 수정 · 삭제<br>
+      • 바로가기 링크 추가 · 수정 (로고 이미지 업로드 가능)<br>
+      • 저서별설교에 쿠팡 구매 링크 연결<br>
+      • 항목 순서 변경 (▲▼ 버튼)
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 8. 앱 설치 -->
+  <div class="section" id="install">
+    <div class="section-label">
+      <div class="section-num">8</div>
+      <div class="section-title">📱 앱 설치 방법</div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">🤖 안드로이드 (크롬 브라우저)</div>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-text">매매주 좌측 로고 버튼 터치</div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-text"><strong>"설치"</strong> 팝업 확인 후 설치</div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-text">홈 화면에 <strong>매매주</strong> 아이콘 생성 완료</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">🍎 아이폰 (Safari 브라우저 필수)</div>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-text">Safari로 매매주 접속 후 하단 <strong>공유 버튼(□↑)</strong> 터치</div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-text">메뉴에서 <strong>"홈 화면에 추가"</strong> 선택</div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-text">이름 확인 후 <strong>"추가"</strong> 터치</div>
+      </div>
+      <div class="step">
+        <div class="step-num">④</div>
+        <div class="step-text">홈 화면에 <strong>매매주</strong> 아이콘 생성 완료</div>
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top:12px">
+      <strong>💡 접속 주소</strong><br>
+      <a href="https://www.everydaywjesus.com" style="color:var(--pink);text-decoration:none">
+        https://www.everydaywjesus.com
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="guide-footer">
+  <div style="font-size:20px;margin-bottom:8px">🙏</div>
+  매매주 · 매일 매일을 주님께<br>
+  사랑하는교회 · <a href="https://www.everydaywjesus.com">www.everydaywjesus.com</a>
+</div>
+
+</body>
+</html>
