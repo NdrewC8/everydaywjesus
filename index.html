@@ -1396,14 +1396,19 @@ window.installApp = async () => {
   var fab=document.getElementById('chatFab'),panel=document.getElementById('chatPanel'),
       log=document.getElementById('chatLog'),form=document.getElementById('chatForm'),
       input=document.getElementById('chatInput'),menu=document.getElementById('chatMenu');
-  var MENU=[['📅 앞으로 일정','__schedule'],['🙏 사사모 일정','사사모 일정 알려주세요'],['🕊️ 화요치유사역','다음 화요치유사역 일정 알려주세요'],['⛪ 지교회 찾기','지교회 위치와 연락처 알려주세요'],['💬 문의하기','__contact']];
+  var MENU=[['🙏 사사모 일정','사사모 일정 알려주세요'],['🕊️ 화요치유사역','다음 화요치유사역 일정 알려주세요'],['⛪ 지교회 찾기','지교회 위치와 연락처 알려주세요'],['💬 문의하기','__contact']];
   var busy=false,greeted=false;
   panel.addEventListener('touchstart',function(e){e.stopPropagation()},{passive:true});
   panel.addEventListener('touchend',function(e){e.stopPropagation()},{passive:true});
+  function linkLabel(u){  // 긴 주소 대신 읽기 쉬운 글자로 (링크 자체는 그대로)
+    if(/[?&]query=/.test(u))return '여기를 눌러 보기 ▶';
+    if(/youtube\.com\/playlist/.test(u))return '재생목록 열기 ▶';
+    return u.length>40?u.slice(0,38)+'…':u;
+  }
   function add(text,who){
     var d=document.createElement('div');d.className='cm '+who;
     String(text).split(/(https?:\/\/[^\s)]+)/).forEach(function(part){
-      if(/^https?:\/\//.test(part)){var a=document.createElement('a');a.href=part;a.target='_blank';a.rel='noopener';a.textContent=part;d.appendChild(a);}
+      if(/^https?:\/\//.test(part)){var a=document.createElement('a');a.href=part;a.target='_blank';a.rel='noopener';a.textContent=linkLabel(part);d.appendChild(a);}
       else d.appendChild(document.createTextNode(part));
     });
     log.appendChild(d);log.scrollTop=log.scrollHeight;return d;
