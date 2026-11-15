@@ -287,7 +287,7 @@ body.admin-on .notice-edit-btn{display:inline-flex;align-items:center;gap:3px;}
 @media (min-width:768px){.hf-cho{grid-template-columns:repeat(8,1fr);}}
 
 /* ── 챗봇 ── */
-#chatFab{position:fixed;right:16px;bottom:18px;width:58px;height:58px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold-light);font-size:26px;cursor:pointer;z-index:900;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+#chatFab{position:fixed;right:14px;bottom:18px;height:48px;padding:0 18px;border-radius:24px;border:1px solid var(--gold);background:var(--card);color:var(--gold-light);font-family:inherit;font-size:15px;font-weight:700;line-height:1;white-space:nowrap;cursor:pointer;z-index:900;box-shadow:0 4px 16px rgba(0,0,0,.5)}
 #chatPanel{position:fixed;right:12px;bottom:84px;width:min(380px,calc(100vw - 24px));height:min(560px,calc(100vh - 110px));background:var(--dark);border:1px solid var(--border);border-radius:var(--radius);display:none;flex-direction:column;z-index:901;box-shadow:0 8px 28px rgba(0,0,0,.6);overflow:hidden}
 #chatPanel.open{display:flex}
 .chat-head{padding:12px 14px;background:var(--card);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;color:var(--gold-light);font-weight:700}
@@ -1383,9 +1383,9 @@ window.installApp = async () => {
   new MutationObserver(function(){if(sec.classList.contains('active'))load();}).observe(sec,{attributes:true,attributeFilter:['class']});
 })();
 </script>
-<button id="chatFab" aria-label="안내 도우미">💬</button>
-<div id="chatPanel" role="dialog" aria-label="매매주 안내 도우미">
-  <div class="chat-head"><span>💬 매매주 안내 도우미</span><button id="chatClose" aria-label="닫기">✕</button></div>
+<button id="chatFab" aria-label="매매주 챗봇 열기">💬 무엇이든 물어보세요</button>
+<div id="chatPanel" role="dialog" aria-label="매매주 챗봇">
+  <div class="chat-head"><span>💬 매매주 챗봇</span><button id="chatClose" aria-label="닫기">✕</button></div>
   <div id="chatLog"></div>
   <div class="chat-menu" id="chatMenu"></div>
   <form class="chat-in" id="chatForm"><input id="chatInput" maxlength="200" placeholder="궁금한 점을 입력하세요" autocomplete="off"><button type="submit">전송</button></form>
@@ -1437,7 +1437,8 @@ window.installApp = async () => {
   form.addEventListener('submit',function(e){e.preventDefault();var q=input.value.trim();if(q.length<2)return;input.value='';run(q)});
   function toggle(open){
     panel.classList.toggle('open',open);
-    if(open&&!greeted){greeted=true;add('안녕하세요, 매매주 안내 도우미예요 🙏\n아래 버튼을 누르거나 궁금한 점을 직접 입력해 주세요.','bot')}
+    fab.textContent=open?'✕ 닫기':'💬 무엇이든 물어보세요';
+    if(open&&!greeted){greeted=true;add('안녕하세요, 매매주 챗봇이에요 🙏\n궁금한 점을 직접 입력하거나 아래 버튼을 눌러 주세요.','bot')}
     if(open&&window.gtag){try{gtag('event','chat_open')}catch(e){}}
   }
   fab.onclick=function(){toggle(!panel.classList.contains('open'))};
